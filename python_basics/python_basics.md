@@ -63,7 +63,7 @@ $
 ```
 
 # Python Strings
-## Python Strings
+## Single or Double Quote
 ``` python
 $ python
 
@@ -79,7 +79,7 @@ Meet me tonight.
 The clock strikes at midnight.
 >>>
 ```
-## Python Strings
+## Mixed Quotes
 ``` python
 >>> message3 = 'I'm looking for someone to ...'
 ... ...
@@ -93,7 +93,7 @@ SyntaxError: invalid syntax
 >>> message4 = 'The word "apple" was not ...'
 >>>
 ```
-## Python Strings
+## Triple Quote
 ``` python
 >>> complex_string = """no matter you have
 ... "double quote", or
