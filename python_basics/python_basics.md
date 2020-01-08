@@ -101,3 +101,73 @@ SyntaxError: invalid syntax
 ... this triple quote can handle."""
 >>>
 ```
+# Numbers in Python
+## Numbers in Python Version 2
+``` python
+$ python
+
+Python 2.x.xx ...
+...
+
+>>> # Types of numbers: int, long, float, complex
+... # Whole numbers: int, long
+...
+>>> a = 28  # This is an integer
+>>> type(a)
+<type 'int'>
+>>> a
+28
+>>> print(a)
+28
+>>>
+```
+## Numbers in Python Version 2
+``` python
+>>> import sys
+>>> sys.maxint
+2147483647
+>>> b = 2147483647
+>>> type(b)
+<type 'int'>
+>>> c = 2147483648
+>>> type(c)
+<type 'long'>
+>>> c
+2147483648L
+>>> print(c)
+2147483648
+>>>
+```
+## Numbers in Python Version 2
+``` python
+>>> d = -sys.maxint - 1
+>>> type(d)
+<type 'int'>
+>>> d
+-2147483648
+>>> e = -2147483649
+>>> type(e)
+<type 'long'>
+>>>
+>>> f = 1L
+>>>
+```
+## Numbers in Python Version 2
+### Floats
+``` python
+>>> e = 2.718281828
+>>> type(e)
+<type 'float'>
+>>>
+```
+### Complex Numbers
+``` python
+>>> z = 3 + 5.7j
+>>> type(z)
+<type 'complex'>
+>>> z.real
+3.0
+>>> z.imag
+5.7
+>>>
+```
