@@ -1,0 +1,31 @@
+\documentclass{beamer}
+
+\usetheme{CambridgeUS}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{minted,skins}
+
+\newtcblisting{pythoncode}{
+  listing engine=minted,
+  colback=pythoncodebg,
+  %colframe=red!70,
+  listing only,
+  minted style=monokai,
+  minted language=python,
+  minted options={linenos=true,texcl=true},
+  left=1mm,
+}
+\definecolor{pythoncodebg}{HTML}{282828}
+
+\begin{document}
+
+\begin{frame}[fragile]
+The following minted environment begins in a new line even if
+a background color is added to the minted environment.
+\begin{pythoncode}
+  def fun(x, y):
+      return x + y
+\end{pythoncode}
+\end{frame}
+
+\end{document}
