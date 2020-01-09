@@ -1,6 +1,6 @@
 ---
 title:
-- Python Basics
+- Python Basics 1
 
 author:
 - Jie Niu
