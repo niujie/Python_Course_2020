@@ -14,7 +14,10 @@ theme:
 ---
 # Hello Python
 ## Install Python
-[https://www.python.org](https://www.python.org)
+[https://www.python.org](https://www.python.org)  
+&nbsp;
+&nbsp;
+&nbsp;
 
 Anaconda (includes everything you need for scientific computing) [https://www.anaconda.com](https://www.anaconda.com)
 
@@ -525,8 +528,11 @@ GVR was born on Tuesday, January 31, 1956.
 
 - Module:&nbsp;datetime
 - Class:&nbsp;&nbsp;&nbsp;&nbsp;datetime
-- Method:&nbsp;today()
-
+- Method:&nbsp;today()  
+  
+  
+  
+&nbsp;
 ```bash
 >>> now = datetime.datetime.today()
 >>> print(now)

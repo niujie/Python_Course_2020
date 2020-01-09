@@ -1,3 +1,11 @@
 
 *.pdf
 *.png
+python_basics/beamer-tutorial.toc
+python_basics/beamer-tutorial.aux
+python_basics/beamer-tutorial.dvi
+python_basics/beamer-tutorial.log
+python_basics/beamer-tutorial.nav
+python_basics/beamer-tutorial.out
+python_basics/beamer-tutorial.synctex.gz
+python_basics/beamer-tutorial.snm
