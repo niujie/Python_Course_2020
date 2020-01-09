@@ -1,3 +1,16 @@
 
 *.pdf
 *.png
+*.aux
+*.fls
+*.listing
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.vrb
+*.fdb_latexmk
+*.gz
+python_basics/_minted-python_basics_2
+.idea
