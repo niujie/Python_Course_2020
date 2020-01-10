@@ -59,7 +59,7 @@ Ping!
 \end{pythoncode}
 \end{frame}
 
-\begin{frame}[fragile]{Functions}
+\begin{frame}[fragile]{Functions with argument}
 \begin{pythoncode}
 >>> import math
 >>> math.pi
@@ -79,7 +79,7 @@ TypeError: volume() takes exactly 1 argument (0 given)
 \end{pythoncode}
 \end{frame}
 
-\begin{frame}[fragile]{Functions}
+\begin{frame}[fragile]{Functions: docstrings, multiple arguments}
 \begin{pythoncode}
 >>> help(volume)
 Help on function volume in module __main__:
@@ -94,6 +94,7 @@ Returns the volume of a sphere with radius r.
 ...
 >>> triangle_area(3, 6)
 9.0
+>>>
 \end{pythoncode}
 \end{frame}
 
@@ -105,7 +106,359 @@ Returns the volume of a sphere with radius r.
 ...     feet_to_cm = feet * 12 * 2.54
 ...     return inches_to_cm + feet_to_cm
 ...
+>>> cm(feet = 5)
+152.4
+>>> cm(inches = 70)
+177.8
+>>> cm(feet = 5, inches = 8)
+172.72
+>>> cm(inches = 8, feet = 5)
+172.72
+\end{pythoncode}
+\end{frame}
+
+\begin{frame}[fragile]{Types of Arguments}
+\begin{itemize}
+  \item keyword
+  \item Required
+\end{itemize}
+\begin{pythoncode}
+>>> def g(x = 0, y):
+...     return x + y
+...
+  File "<stdin>", line 1
+SyntaxError: non-default argument follows default argument
+>>> def g(y, x = 0):
+...     return x + y
+...
+>>> g(5)
+5
+>>> g(7, x = 3)
+10
+>>>
+\end{pythoncode}
+\end{frame}
+
+\section{Data Stuctures}
+\subsection{Set}
+
+\begin{frame}[fragile]{Set}
+\begin{pythoncode}
+>>> example = set()
+>>> dir(example)
+[... ..., 'add', ... ...]
+>>> help(example.add)
+Help on built-in function add:
+
+add(...) method of builtins.set instance
+    Add an element to a set.
+
+    This has no effect if the element is already present.
+
+>>> example.add(42)
+>>> example.add(False)
+>>> example.add(3.14159)
+>>> example.add("Thorium")
+\end{pythoncode}
+\end{frame}
+
+\begin{frame}[fragile]{Set}
+\begin{pythoncode}
+>>> example  # elements may be displayed in different order
+{False, 42, 3.14159, 'Thorium'}
+>>> example.add(42)
+>>> example
+{False, 42, 3.14159, 'Thorium'}
+>>> len(example)
+4
+>>> help(example.remove)
+Help on built-in function remove:
+
+remove(...) method of builtins.set instance
+    Remove an element from a set; it must be a member.
+
+    If the element is not a member, raise a KeyError.
+>>>
+\end{pythoncode}
+\end{frame}
+
+\begin{frame}[fragile]{Set}
+\begin{pythoncode}
+>>> example.remove(42)
+>>> len(example)
+3
+>>> example
+{False, 3.14159, 'Thorium'}
+>>> example.remove(50)
+... ...
+KeyError: 50
+>>> help(example.discard)
+Help on built-in function discard:
+
+discard(...) method of builtins.set instance
+    Remove an element from a set if it is a member.
+
+    If the element is not a member, do nothing.
+\end{pythoncode}
+\end{frame}
+
+\begin{frame}[fragile]{Set}
+\begin{pythoncode}
+>>> example.discard(50)
+>>> len(example)
+3
+>>> example.clear()
+>>> leng(example)
+0
+>>> odds = set([1, 3, 5, 7, 9])
+>>> evens = set([2, 4, 6, 8, 10])
+>>> primes = set([2, 3, 5, 7])
+>>> composites = set([4, 6, 8, 9, 10])
+>>> odds.union(evens)
+{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+>>> evens.union(odds)
+{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 >>> 
+\end{pythoncode}
+\end{frame}
+
+\begin{frame}[fragile]{Set}
+\begin{pythoncode}
+>>> odds
+{1, 3, 5, 7, 9}
+>>> evens
+{2, 4, 6, 8, 10}
+>>> odds.intersection(primes)
+{3, 5, 7}
+>>> primes.intersection(evens)
+{2}
+>>> evens.intersection(odds)
+set()
+>>>  primes.union(composites)
+{2, 3, 4, 5, 6, 7, 8, 9, 10}
+>>> 2 in primes
+True
+>>>
+\end{pythoncode}
+\end{frame}
+
+\begin{frame}[fragile]{Set}
+\begin{pythoncode}
+>>> 6 in odds
+False
+>>> 9 not in evens
+True
+>>> dir(primes)
+... ...
+\end{pythoncode}
+
+There are many build-in methods (functions) in \textbf{Set}. Just try them.\\
+\textbf{Set} is the data structure that stores \textit{unordered} and \textit{unique} data.
+\end{frame}
+
+\subsection{List}
+
+\begin{frame}[fragile]{List}
+\begin{pythoncode}
+>>> example = list()
+>>> example = []
+>>> 
+>>> primes = [2, 3, 5, 7, 11, 13]
+>>> primes.append(17)
+>>> primes.append(19)
+>>> primes  # NOTE the order of the data, 
+...         # which is different than the set
+[2, 3, 5, 7, 11, 13, 17, 19]
+>>> primes[0]  # index starts from 0
+2
+>>> primes[1]
+3
+>>> primes[2]
+5
+\end{pythoncode}
+\end{frame}
+
+\begin{frame}[fragile]{List}
+\begin{pythoncode}
+>>> primes[-1]
+19
+>>> primes[-2]
+17
+>>> primes[-9]
+... ...
+IndexError: list index out of range
+>>> # Slicing. # NOTE slicing includes the starting index,
+...            #     BUT excludes the stopping index.
+>>> primes[2:5]
+[5, 7, 11]
+>>> primes[0:6]
+[2, 3, 5, 7, 11, 13]
+>>>
+\end{pythoncode}
+\end{frame}
+
+\begin{frame}[fragile]{List}
+Many languages require the list (array) contain the same type of data, 
+but \textbf{NOT} Python.\\
+\begin{pythoncode}
+>>> example = [128, True, "Alpha", 1.732, [64, False]]
+>>> rolls = [4, 7, 2, 7, 12, 4, 7]
+>>> rolls  # NOTE the repeated values are all there, 
+...        # different than the set.
+[4, 7, 2, 7, 12, 4, 7]
+>>> numbers = [1, 2, 3]
+>>> letters = ['a', 'b', 'c']
+>>> numbers + letters  # Concatenation
+[1, 2, 3, 'a', 'b', 'c']
+>>> letters + numbers
+['a', 'b', 'c', 1, 2, 3]
+\end{pythoncode}
+\end{frame}
+
+\begin{frame}[fragile]{List}
+\begin{pythoncode}
+>>> numbers
+[1, 2, 3]
+>>> letters
+['a', 'b', 'c']
+>>> dir(numbers)
+[ ... ... ]
+>>> help(numbers.reverse)
+Help on built-in function reverse:
+
+reverse() method of builtins.list instance
+    Reverse *IN PLACE*.
+>>> 
+\end{pythoncode}
+There are many build-in methods (functions) for the List. Just try them.
+\end{frame}
+
+\subsection{Dictionary}
+
+\begin{frame}[fragile]{Dictionary}
+\begin{pythoncode}
+>>> # FriendFace post
+... # User\_id = 209
+... # message = "D5 E5 C5 C4 G4"
+... # language = "English"
+... # datetime = "20230215T1242317"
+... # location = (44.590533, -104.715556)
+... 
+>>> post = {"User_id": 209, "message": "D5 E5 C5 C4 G4",
+... "language": "English", "datetime": "20230215T1242317",
+... "location": (44.590533, -104.715556)}
+>>> type(post)
+<class 'dict'>
+>>> 
+\end{pythoncode}
+\end{frame}
+
+\begin{frame}[fragile]{Dictionary}
+
+\begin{center}
+\begin{tabular}{ |l|l| }
+  \hline
+  \textbf{Key} & \textbf{Value} \\
+  \hline
+  User\_id     & 209 \\
+  \hline
+  message      & "D5 E5 C5 C4 G4" \\
+  \hline
+  language     & "English" \\
+  \hline
+  datetime     & "20230215T1242317" \\
+  \hline
+  location     & (44.590533, -104.715556) \\
+  \hline
+\end{tabular}
+\end{center}
+
+\begin{pythoncode}
+>>> post2 = dict(message="SS Cotopaxi", language="English")
+>>> print(post2)
+{'message': 'SS Cotopaxi', 'language': 'English'}
+>>> post2["user_id"] = 209
+>>> post2["datetime"] = "19771116T093001Z"
+>>> print(post2)
+{'message': 'SS Cotopaxi', 'language': 'English', 
+ 'user_id': 209, 'datetime': '19771116T093001Z'}
+\end{pythoncode}
+
+\end{frame}
+
+\begin{frame}[fragile]{Dictionary - Accessing Data in Dictionary}
+\begin{pythoncode}
+>>> print(post['message'])
+D5 E5 C5 C4 G4
+>>> print(post2['location'])
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+KeyError: 'location'
+>>> if 'location' in post2:
+...     print(post2['location'])
+... else:
+...     print("The post does not contain a location value.")
+...
+The post does not contain a location value.
+>>> 
+\end{pythoncode}
+\end{frame}
+
+\begin{frame}[fragile]{Dictionary - Accessing Data in Dictionary}
+\begin{pythoncode}
+>>> try:
+...     print(post2['location'])
+... except KeyError:
+...     print("The post does not have a location.")
+...
+The post does not have a location.
+>>> dir(post2)
+[ ... ..., 'get', ... ...]
+>>> help(post2.get)
+Help on built-in function get:
+
+get(key, default=None, /) method of builtins.dict instance
+    Return the value for key if key is in the dictionary, else default.
+>>> 
+\end{pythoncode}
+\end{frame}
+
+\begin{frame}[fragile]{Dictionary - Accessing Data in Dictionary}
+\begin{pythoncode}
+>>> loc = post2.get('location', None)
+>>> print(loc)
+None
+>>> print(post)
+{'User_id': 209, 'message': 'D5 E5 C5 C4 G4', 'language': 'English', 
+ 'datetime': '20230215T1242317', 'location': (44.590533, -104.715556)}
+>>>
+>>> for key in post.keys():
+...     value = post[key]
+...     print(key, "=", value)
+...
+User_id = 209
+message = D5 E5 C5 C4 G4
+language = English
+... ...
+\end{pythoncode}
+\end{frame}
+
+\begin{frame}[fragile]{Dictionary - Accessing Data in Dictionary}
+NOTE: Dictionary is also unordered data structure, like set.
+\begin{pythoncode}
+... ...
+datetime = 20230215T1242317
+location = (44.590533, -104.715556)
+>>> for key, value in post.items():
+...     print(key, "=", value)
+...
+User_id = 209
+message = D5 E5 C5 C4 G4
+language = English
+datetime = 20230215T1242317
+location = (44.590533, -104.715556)
+>>> dir(post)
+[ ... ..., 'clear', 'pop', 'popitem', ... ... ]
 \end{pythoncode}
 \end{frame}
 
