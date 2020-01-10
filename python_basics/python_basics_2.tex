@@ -135,7 +135,6 @@ SyntaxError: non-default argument follows default argument
 5
 >>> g(7, x = 3)
 10
->>>
 \end{pythoncode}
 \end{frame}
 
@@ -459,6 +458,186 @@ datetime = 20230215T1242317
 location = (44.590533, -104.715556)
 >>> dir(post)
 [ ... ..., 'clear', 'pop', 'popitem', ... ... ]
+\end{pythoncode}
+\end{frame}
+
+\subsection{Tuple}
+
+\begin{frame}[fragile]{Tuples}
+\begin{pythoncode}
+# List example
+prime_numbers = [2, 3, 5, 7, 11, 13, 17]
+
+# Tuple example
+perfect_squares = (1, 4, 9, 16, 25)
+
+# Display lengths
+print("# of Primes = ", len(prime_numbers))
+print("# of Squares = ", len(perfect_squares))
+# of Primes = 7
+# of Squares = 6
+\end{pythoncode}
+\end{frame}
+
+\begin{frame}[fragile]{Tuples}
+\begin{pythoncode}
+for p in prime_numbers:
+    print("Prime: ", p)
+
+for n in perfect_squares:
+    print("Square: ", n)
+
+# Prime: 2
+# Prime: 3
+# Prime: 5
+... ...
+# Square: 1
+# Square: 4
+# Square: 9
+... ...
+\end{pythoncode}
+\end{frame}
+
+\begin{frame}[fragile]{Tuple}
+\begin{pythoncode}
+print('List methods:')
+print(dir(prime_numbers))
+print('-'*80)  # Guess what does this line do?
+print('Tuple methods:)
+print(dir(perfect_squares))
+\end{pythoncode}
+List has more build-in methods available than Tuple.\\
+This extra functionality comes at a price: list occupies more
+memory than tuple.\\
+\begin{pythoncode}
+import sys
+print(dir(sys))
+# [..., 'getsizeof', ...]
+help(sys.getsizeof)
+\end{pythoncode}
+\end{frame}
+
+\begin{frame}[fragile]{Tuple}
+\begin{pythoncode}
+# Help on built-in function getsizeof in module sys:
+
+# getsizeof(...)
+#     getsizeof(object, default) -> int
+      
+#     Return the size of object in bytes.
+list_eg = [1, 2, 3, 'a', 'b', 'c', True, 3.14159]
+tuple_eg = (1, 2, 3, 'a', 'b', 'c', True, 3.14159)
+
+print("size list = ", sys.getsizeof(list_eg))
+print("size tuple = ", sys.getsizeof(tuple_eg))
+# size lsit = 128
+# size tuple = 112
+\end{pythoncode}
+If you are working with big datasets, the more memory 
+occupied by list can be significant.
+\end{frame}
+
+\begin{frame}[fragile]{Tuple}
+\begin{columns}[T]
+\column{.3\textwidth}
+\textbf{List}
+\begin{itemize}
+\item Add data
+\item Remove data
+\item Change data
+\end{itemize}
+\column{.7\textwidth-1cm}
+\textbf{Tuple}
+\begin{itemize}
+\item Cannot be changed
+\item "Immutable"
+\item Made quickly
+\end{itemize}
+\end{columns}
+\vspace{10pt}
+Knowing tuple is immutable enables Python to make 
+significant optimizations.
+\begin{pythoncode}
+import timeit
+list_test = timeit.timeit(stmt="[1,2,3,4,5]", 
+                          number=1000000)
+tuple_test = timeit.timeit(stmt="(1,2,3,4,5)",
+                           number=1000000)
+print("List time: ", list_test)  # 0.08 ...
+print("Tuple time: ", tuple_test)  # 0.02 ...
+\end{pythoncode}
+\end{frame}
+
+\begin{frame}[fragile]{Tuple}
+\begin{pythoncode}
+empty_tuple = ()
+test1 = ('a')
+test2 = ('a', 'b')
+test3 = ('a', 'b', 'c')
+print(empty_tuple)  # ()
+print(test1)        # \textcolor{red}{a}
+print(test2)        # ('a', 'b')
+print(test3)        # ('a', 'b', 'c')
+# test1 is just a string, not a tuple
+test1 == 'a'        # True
+# to make a real tuple with single element
+# need to add a comma
+print(('a',))       # ('a',)
+\end{pythoncode}
+\end{frame}
+
+\begin{frame}[fragile]{Alternative Construction of Tuple}
+\begin{pythoncode}
+test1 = 1,    # NOTE the end comma
+test2 = 1, 2
+test3 = 1, 2, 3
+
+print(test1)    # (1,)
+print(test2)    # (1, 2)
+print(test3)    # (1, 2, 3)
+
+print(type(test1))  # <class 'tuple'> 
+print(type(test2))  # <class 'tuple'>
+print(type(test3))  # <class 'tuple'>
+\end{pythoncode}
+\end{frame}
+
+\begin{frame}[fragile]{Tuple Assignment}
+\begin{pythoncode}
+# (age, country, knows\_python)
+survey = (27, "Vietnam", True)
+
+age = survey[0]
+country = survey[1]
+knows_python = survey[2]
+
+print("Age =", age)   # Age = 27
+print("Country =", country)   # Country = Vietnam
+print("Knows Python?", knows_python)  # Knows Python? True
+
+survey2 = (21, "Switzerland", False)
+age, country, know_python = survey2
+print(age, country, know_python)  # 21 Switzerland False
+\end{pythoncode}
+\end{frame}
+
+\begin{frame}[fragile]{Recap}
+\begin{pythoncode}
+country = ("Australia")   # This is just a string
+# According to the rules of tuple assignment, this would\\
+# assign the string '\textit{Australia}' to the variable \textit{country}.
+
+country = ("Australia",)  # This is a tuple with 
+                          # single element
+# By adding the comma here, you tell python you do want\\
+# \textit{country} to be a tuple, and you donot want to unpack\\
+# the values into the variable.
+
+a, b, c = (1, 2, 3, 4)    # \textcolor{red}{ValueError: too many values}
+                          # \textcolor{red}{to unpack (expected 3)}
+
+x, y, z = (1, 2)  # \textcolor{red}{ValueError: not enough values to}
+                  # \textcolor{red}{unpack (expected 3, got 2)}
 \end{pythoncode}
 \end{frame}
 
