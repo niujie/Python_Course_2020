@@ -1,19 +1,13 @@
 \documentclass{beamer}
 
+\usepackage{minted}
+\setminted[python]{
+  xleftmargin=10pt,linenos,
+  style=monokai,bgcolor=pythoncodebg,
+  mathescape,texcl,
+  fontsize=auto}
+
 \usetheme{CambridgeUS}
-
-\usepackage{tcolorbox}
-\tcbuselibrary{minted,skins}
-
-\newtcblisting{pythoncode}{
-  listing engine=minted,
-  colback=pythoncodebg,
-  listing only,
-  minted style=monokai,
-  minted language=python,
-  minted options={linenos=true, texcl=true},
-  boxsep=0pt,left=8pt,right=2pt,top=4pt,bottom=4pt,
-}
 \definecolor{pythoncodebg}{HTML}{282828}
 
 \title{Python Bascics 2}
@@ -24,7 +18,7 @@
 \begin{document}
 
 \begin{frame}
-  \titlepage
+\titlepage
 \end{frame}
 
 \section{Python Functions}
@@ -32,7 +26,7 @@
 
 \begin{frame}[fragile]{Functions}
 The purpose of using function (in any programming language) is - \textbf{RE-USING} it.\\
-\begin{pythoncode}
+\begin{minted}{python}
 >>> def f():
 ...     pass
 ...
@@ -40,11 +34,11 @@ The purpose of using function (in any programming language) is - \textbf{RE-USIN
 >>> f
 <function f at 0x123ABCDEF>
 >>>
-\end{pythoncode}
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{Functions}
-\begin{pythoncode}
+\begin{minted}{python}
 >>> def ping():
 ...     return "Ping!"
 ...
@@ -56,11 +50,11 @@ Ping!
 >>> dir()
 ['__builtins__', ... ..., 'f', 'ping', 'x']
 >>>
-\end{pythoncode}
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{Functions with argument}
-\begin{pythoncode}
+\begin{minted}{python}
 >>> import math
 >>> math.pi
 3.141592653589793
@@ -76,11 +70,11 @@ Ping!
 ... ...
 TypeError: volume() takes exactly 1 argument (0 given)
 >>>
-\end{pythoncode}
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{Functions: docstrings, multiple arguments}
-\begin{pythoncode}
+\begin{minted}{python}
 >>> help(volume)
 Help on function volume in module __main__:
 
@@ -95,16 +89,16 @@ Returns the volume of a sphere with radius r.
 >>> triangle_area(3, 6)
 9.0
 >>>
-\end{pythoncode}
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{Functions with keyword (default) arguments}
-\begin{pythoncode}
+\begin{minted}[fontsize=\footnotesize]{python}
 >>> def cm(feet = 0, inches = 0):
-...     """Converts a length from feet and inches to centimeters."""
-...     inches_to_cm = inches * 2.54
-...     feet_to_cm = feet * 12 * 2.54
-...     return inches_to_cm + feet_to_cm
+...  """Converts a length from feet and inches to centimeters."""
+...  inches_to_cm = inches * 2.54
+...  feet_to_cm = feet * 12 * 2.54
+...  return inches_to_cm + feet_to_cm
 ...
 >>> cm(feet = 5)
 152.4
@@ -114,7 +108,8 @@ Returns the volume of a sphere with radius r.
 172.72
 >>> cm(inches = 8, feet = 5)
 172.72
-\end{pythoncode}
+>>>
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{Types of Arguments}
@@ -122,7 +117,7 @@ Returns the volume of a sphere with radius r.
   \item keyword
   \item Required
 \end{itemize}
-\begin{pythoncode}
+\begin{minted}[fontsize=\small]{python}
 >>> def g(x = 0, y):
 ...     return x + y
 ...
@@ -135,14 +130,15 @@ SyntaxError: non-default argument follows default argument
 5
 >>> g(7, x = 3)
 10
-\end{pythoncode}
+>>>
+\end{minted}
 \end{frame}
 
 \section{Data Stuctures}
 \subsection{Set}
 
 \begin{frame}[fragile]{Set}
-\begin{pythoncode}
+\begin{minted}{python}
 >>> example = set()
 >>> dir(example)
 [... ..., 'add', ... ...]
@@ -151,19 +147,18 @@ Help on built-in function add:
 
 add(...) method of builtins.set instance
     Add an element to a set.
-
     This has no effect if the element is already present.
 
 >>> example.add(42)
 >>> example.add(False)
 >>> example.add(3.14159)
 >>> example.add("Thorium")
-\end{pythoncode}
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{Set}
-\begin{pythoncode}
->>> example  # elements may be displayed in different order
+\begin{minted}{python}
+>>> example  # elements may display in different order
 {False, 42, 3.14159, 'Thorium'}
 >>> example.add(42)
 >>> example
@@ -178,11 +173,11 @@ remove(...) method of builtins.set instance
 
     If the element is not a member, raise a KeyError.
 >>>
-\end{pythoncode}
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{Set}
-\begin{pythoncode}
+\begin{minted}{python}
 >>> example.remove(42)
 >>> len(example)
 3
@@ -196,13 +191,12 @@ Help on built-in function discard:
 
 discard(...) method of builtins.set instance
     Remove an element from a set if it is a member.
-
     If the element is not a member, do nothing.
-\end{pythoncode}
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{Set}
-\begin{pythoncode}
+\begin{minted}{python}
 >>> example.discard(50)
 >>> len(example)
 3
@@ -217,12 +211,11 @@ discard(...) method of builtins.set instance
 {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 >>> evens.union(odds)
 {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
->>> 
-\end{pythoncode}
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{Set}
-\begin{pythoncode}
+\begin{minted}{python}
 >>> odds
 {1, 3, 5, 7, 9}
 >>> evens
@@ -238,18 +231,18 @@ set()
 >>> 2 in primes
 True
 >>>
-\end{pythoncode}
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{Set}
-\begin{pythoncode}
+\begin{minted}{python}
 >>> 6 in odds
 False
 >>> 9 not in evens
 True
 >>> dir(primes)
 ... ...
-\end{pythoncode}
+\end{minted}
 
 There are many build-in methods (functions) in \textbf{Set}. Just try them.\\
 \textbf{Set} is the data structure that stores \textit{unordered} and \textit{unique} data.
@@ -258,10 +251,9 @@ There are many build-in methods (functions) in \textbf{Set}. Just try them.\\
 \subsection{List}
 
 \begin{frame}[fragile]{List}
-\begin{pythoncode}
+\begin{minted}{python}
 >>> example = list()
->>> example = []
->>> 
+>>> example = 
 >>> primes = [2, 3, 5, 7, 11, 13]
 >>> primes.append(17)
 >>> primes.append(19)
@@ -274,11 +266,11 @@ There are many build-in methods (functions) in \textbf{Set}. Just try them.\\
 3
 >>> primes[2]
 5
-\end{pythoncode}
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{List}
-\begin{pythoncode}
+\begin{minted}{python}
 >>> primes[-1]
 19
 >>> primes[-2]
@@ -286,20 +278,20 @@ There are many build-in methods (functions) in \textbf{Set}. Just try them.\\
 >>> primes[-9]
 ... ...
 IndexError: list index out of range
->>> # Slicing. # NOTE slicing includes the starting index,
-...            #     BUT excludes the stopping index.
+>>> # Slicing. NOTE slicing includes the starting index,
+... #               BUT excludes the stopping index.
 >>> primes[2:5]
 [5, 7, 11]
 >>> primes[0:6]
 [2, 3, 5, 7, 11, 13]
 >>>
-\end{pythoncode}
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{List}
 Many languages require the list (array) contain the same type of data, 
 but \textbf{NOT} Python.\\
-\begin{pythoncode}
+\begin{minted}{python}
 >>> example = [128, True, "Alpha", 1.732, [64, False]]
 >>> rolls = [4, 7, 2, 7, 12, 4, 7]
 >>> rolls  # NOTE the repeated values are all there, 
@@ -311,11 +303,11 @@ but \textbf{NOT} Python.\\
 [1, 2, 3, 'a', 'b', 'c']
 >>> letters + numbers
 ['a', 'b', 'c', 1, 2, 3]
-\end{pythoncode}
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{List}
-\begin{pythoncode}
+\begin{minted}{python}
 >>> numbers
 [1, 2, 3]
 >>> letters
@@ -328,14 +320,14 @@ Help on built-in function reverse:
 reverse() method of builtins.list instance
     Reverse *IN PLACE*.
 >>> 
-\end{pythoncode}
+\end{minted}
 There are many build-in methods (functions) for the List. Just try them.
 \end{frame}
 
 \subsection{Dictionary}
 
 \begin{frame}[fragile]{Dictionary}
-\begin{pythoncode}
+\begin{minted}{python}
 >>> # FriendFace post
 ... # User\_id = 209
 ... # message = "D5 E5 C5 C4 G4"
@@ -343,13 +335,13 @@ There are many build-in methods (functions) for the List. Just try them.
 ... # datetime = "20230215T1242317"
 ... # location = (44.590533, -104.715556)
 ... 
->>> post = {"User_id": 209, "message": "D5 E5 C5 C4 G4",
-... "language": "English", "datetime": "20230215T1242317",
-... "location": (44.590533, -104.715556)}
+>>> post = {"User_id":209, "message":"D5 E5 C5 C4 G4",
+... "language":"English", "datetime":"20230215T1242317",
+... "location":(44.590533, -104.715556)}
 >>> type(post)
 <class 'dict'>
 >>> 
-\end{pythoncode}
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{Dictionary}
@@ -372,7 +364,7 @@ There are many build-in methods (functions) for the List. Just try them.
 \end{tabular}
 \end{center}
 
-\begin{pythoncode}
+\begin{minted}[fontsize=\small]{python}
 >>> post2 = dict(message="SS Cotopaxi", language="English")
 >>> print(post2)
 {'message': 'SS Cotopaxi', 'language': 'English'}
@@ -380,13 +372,13 @@ There are many build-in methods (functions) for the List. Just try them.
 >>> post2["datetime"] = "19771116T093001Z"
 >>> print(post2)
 {'message': 'SS Cotopaxi', 'language': 'English', 
- 'user_id': 209, 'datetime': '19771116T093001Z'}
-\end{pythoncode}
+  'user_id': 209, 'datetime': '19771116T093001Z'}
+\end{minted}
 
 \end{frame}
 
 \begin{frame}[fragile]{Dictionary - Accessing Data in Dictionary}
-\begin{pythoncode}
+\begin{minted}[fontsize=\small]{python}
 >>> print(post['message'])
 D5 E5 C5 C4 G4
 >>> print(post2['location'])
@@ -400,11 +392,11 @@ KeyError: 'location'
 ...
 The post does not contain a location value.
 >>> 
-\end{pythoncode}
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{Dictionary - Accessing Data in Dictionary}
-\begin{pythoncode}
+\begin{minted}[fontsize=\small]{python}
 >>> try:
 ...     print(post2['location'])
 ... except KeyError:
@@ -417,20 +409,21 @@ The post does not have a location.
 Help on built-in function get:
 
 get(key, default=None, /) method of builtins.dict instance
-    Return the value for key if key is in the dictionary, else default.
+
+    Return the value for key if key is in the dictionary, 
+    else default.
 >>> 
-\end{pythoncode}
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{Dictionary - Accessing Data in Dictionary}
-\begin{pythoncode}
+\begin{minted}[fontsize=\footnotesize]{python}
 >>> loc = post2.get('location', None)
 >>> print(loc)
 None
 >>> print(post)
 {'User_id': 209, 'message': 'D5 E5 C5 C4 G4', 'language': 'English', 
- 'datetime': '20230215T1242317', 'location': (44.590533, -104.715556)}
->>>
+  'datetime': '20230215T1242317', 'location': (44.590533, -104.715556)}
 >>> for key in post.keys():
 ...     value = post[key]
 ...     print(key, "=", value)
@@ -438,16 +431,15 @@ None
 User_id = 209
 message = D5 E5 C5 C4 G4
 language = English
-... ...
-\end{pythoncode}
+datetime = 20230215T1242317
+location = (44.590533, -104.715556)
+>>>
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{Dictionary - Accessing Data in Dictionary}
 NOTE: Dictionary is also unordered data structure, like set.
-\begin{pythoncode}
-... ...
-datetime = 20230215T1242317
-location = (44.590533, -104.715556)
+\begin{minted}{python}
 >>> for key, value in post.items():
 ...     print(key, "=", value)
 ...
@@ -458,13 +450,13 @@ datetime = 20230215T1242317
 location = (44.590533, -104.715556)
 >>> dir(post)
 [ ... ..., 'clear', 'pop', 'popitem', ... ... ]
-\end{pythoncode}
+\end{minted}
 \end{frame}
 
 \subsection{Tuple}
 
 \begin{frame}[fragile]{Tuples}
-\begin{pythoncode}
+\begin{minted}{python}
 # List example
 prime_numbers = [2, 3, 5, 7, 11, 13, 17]
 
@@ -476,11 +468,11 @@ print("# of Primes = ", len(prime_numbers))
 print("# of Squares = ", len(perfect_squares))
 # of Primes = 7
 # of Squares = 6
-\end{pythoncode}
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{Tuples}
-\begin{pythoncode}
+\begin{minted}{python}
 for p in prime_numbers:
     print("Prime: ", p)
 
@@ -495,35 +487,34 @@ for n in perfect_squares:
 # Square: 4
 # Square: 9
 ... ...
-\end{pythoncode}
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{Tuple}
-\begin{pythoncode}
+\begin{minted}{python}
 print('List methods:')
 print(dir(prime_numbers))
 print('-'*80)  # Guess what does this line do?
 print('Tuple methods:)
 print(dir(perfect_squares))
-\end{pythoncode}
+\end{minted}
 List has more build-in methods available than Tuple.\\
 This extra functionality comes at a price: list occupies more
-memory than tuple.\\
-\begin{pythoncode}
+memory than tuple.
+\begin{minted}{python}
 import sys
 print(dir(sys))
 # [..., 'getsizeof', ...]
 help(sys.getsizeof)
-\end{pythoncode}
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{Tuple}
-\begin{pythoncode}
+\begin{minted}{python}
 # Help on built-in function getsizeof in module sys:
 
 # getsizeof(...)
 #     getsizeof(object, default) -> int
-      
 #     Return the size of object in bytes.
 list_eg = [1, 2, 3, 'a', 'b', 'c', True, 3.14159]
 tuple_eg = (1, 2, 3, 'a', 'b', 'c', True, 3.14159)
@@ -532,7 +523,7 @@ print("size list = ", sys.getsizeof(list_eg))
 print("size tuple = ", sys.getsizeof(tuple_eg))
 # size lsit = 128
 # size tuple = 112
-\end{pythoncode}
+\end{minted}
 If you are working with big datasets, the more memory 
 occupied by list can be significant.
 \end{frame}
@@ -557,19 +548,19 @@ occupied by list can be significant.
 \vspace{10pt}
 Knowing tuple is immutable enables Python to make 
 significant optimizations.
-\begin{pythoncode}
+\begin{minted}{python}
 import timeit
 list_test = timeit.timeit(stmt="[1,2,3,4,5]", 
                           number=1000000)
 tuple_test = timeit.timeit(stmt="(1,2,3,4,5)",
-                           number=1000000)
+                            number=1000000)
 print("List time: ", list_test)  # 0.08 ...
 print("Tuple time: ", tuple_test)  # 0.02 ...
-\end{pythoncode}
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{Tuple}
-\begin{pythoncode}
+\begin{minted}{python}
 empty_tuple = ()
 test1 = ('a')
 test2 = ('a', 'b')
@@ -583,11 +574,11 @@ test1 == 'a'        # True
 # to make a real tuple with single element
 # need to add a comma
 print(('a',))       # ('a',)
-\end{pythoncode}
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{Alternative Construction of Tuple}
-\begin{pythoncode}
+\begin{minted}{python}
 test1 = 1,    # NOTE the end comma
 test2 = 1, 2
 test3 = 1, 2, 3
@@ -599,11 +590,11 @@ print(test3)    # (1, 2, 3)
 print(type(test1))  # <class 'tuple'> 
 print(type(test2))  # <class 'tuple'>
 print(type(test3))  # <class 'tuple'>
-\end{pythoncode}
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{Tuple Assignment}
-\begin{pythoncode}
+\begin{minted}[fontsize=\small]{python}
 # (age, country, knows\_python)
 survey = (27, "Vietnam", True)
 
@@ -618,11 +609,11 @@ print("Knows Python?", knows_python)  # Knows Python? True
 survey2 = (21, "Switzerland", False)
 age, country, know_python = survey2
 print(age, country, know_python)  # 21 Switzerland False
-\end{pythoncode}
+\end{minted}
 \end{frame}
 
 \begin{frame}[fragile]{Recap}
-\begin{pythoncode}
+\begin{minted}{python}
 country = ("Australia")   # This is just a string
 # According to the rules of tuple assignment, this would\\
 # assign the string '\textit{Australia}' to the variable \textit{country}.
@@ -635,10 +626,9 @@ country = ("Australia",)  # This is a tuple with
 
 a, b, c = (1, 2, 3, 4)    # \textcolor{red}{ValueError: too many values}
                           # \textcolor{red}{to unpack (expected 3)}
-
 x, y, z = (1, 2)  # \textcolor{red}{ValueError: not enough values to}
                   # \textcolor{red}{unpack (expected 3, got 2)}
-\end{pythoncode}
+\end{minted}
 \end{frame}
 
 \end{document}
