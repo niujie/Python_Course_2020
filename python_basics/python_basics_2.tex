@@ -10,7 +10,7 @@
 \usetheme{CambridgeUS}
 \definecolor{pythoncodebg}{HTML}{282828}
 
-\title{Python Bascics 2}
+\title{Python Basics 2}
 \author{Jie Niu}
 \institute{IGWES, JNU}
 \date{\today}
@@ -134,7 +134,7 @@ SyntaxError: non-default argument follows default argument
 \end{minted}
 \end{frame}
 
-\section{Data Stuctures}
+\section{Data Structures}
 \subsection{Set}
 
 \begin{frame}[fragile]{Set}
@@ -201,7 +201,7 @@ discard(...) method of builtins.set instance
 >>> len(example)
 3
 >>> example.clear()
->>> leng(example)
+>>> len(example)
 0
 >>> odds = set([1, 3, 5, 7, 9])
 >>> evens = set([2, 4, 6, 8, 10])
@@ -521,7 +521,7 @@ tuple_eg = (1, 2, 3, 'a', 'b', 'c', True, 3.14159)
 
 print("size list = ", sys.getsizeof(list_eg))
 print("size tuple = ", sys.getsizeof(tuple_eg))
-# size lsit = 128
+# size list = 128
 # size tuple = 112
 \end{minted}
 If you are working with big datasets, the more memory 
@@ -621,7 +621,7 @@ country = ("Australia")   # This is just a string
 country = ("Australia",)  # This is a tuple with 
                           # single element
 # By adding the comma here, you tell python you do want\\
-# \textit{country} to be a tuple, and you donot want to unpack\\
+# \textit{country} to be a tuple, and you do not want to unpack\\
 # the values into the variable.
 
 a, b, c = (1, 2, 3, 4)    # \textcolor{red}{ValueError: too many values}

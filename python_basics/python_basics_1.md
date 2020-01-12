@@ -13,7 +13,9 @@ theme:
 
 ---
 # Hello Python
+
 ## Install Python
+
 [https://www.python.org](https://www.python.org)  
 &nbsp;
 &nbsp;
@@ -22,15 +24,20 @@ theme:
 Anaconda (includes everything you need for scientific computing) [https://www.anaconda.com](https://www.anaconda.com)
 
 ## Start using Python interpreter
+
 Open **terminal** (Mac OS or Linux)
+
 ```bash
 $ python
 ```
+
 or **cmd** (Windows)
+
 ```bash
 C:\> python
 ```
-```bash 
+
+```bash
 $ python
 
 Python 2.x.xx ...
@@ -40,6 +47,7 @@ Python 2.x.xx ...
 ```
 
 ## Start using Python interpreter
+
 ```bash
 $ python3
 
@@ -48,6 +56,7 @@ Python 3.x.xx ...
 
 >>>
 ```
+
 ```bash
 >>> print('Hello Python!')
 Hello Python!
@@ -55,11 +64,15 @@ Hello Python!
 ```
 
 ## Write your first Python script file
+
 Using any of your favorite Text Editor.
+
 ```bash
 $ vim 01_hello_python.py
 ```
+
 Input `print("Hello Python!")` in your file.
+
 ```bash
 $ python 01_hello_python.py
 Hello Python!
@@ -68,7 +81,9 @@ $
 ```
 
 # Python Strings
+
 ## Single or Double Quote
+
 ```bash
 $ python
 
@@ -86,6 +101,7 @@ The clock strikes at midnight.
 ```
 
 ## Mixed Quotes
+
 ```bash
 >>> message3 = 'I'm looking for someone to ...'
 ... ...
@@ -101,6 +117,7 @@ SyntaxError: invalid syntax
 ```
 
 ## Triple Quote
+
 ```bash
 >>> complex_string = """no matter you have
 ... "double quote", or
@@ -110,7 +127,9 @@ SyntaxError: invalid syntax
 ```
 
 # Numbers in Python
+
 ## Numbers in Python Version 2
+
 ```bash
 $ python
 
@@ -131,6 +150,7 @@ Python 2.x.xx ...
 ```
 
 ## Numbers in Python Version 2
+
 ```bash
 >>> import sys
 >>> sys.maxint
@@ -149,6 +169,7 @@ Python 2.x.xx ...
 ```
 
 ## Numbers in Python Version 2
+
 ```bash
 >>> d = -sys.maxint - 1
 >>> type(d)
@@ -164,7 +185,9 @@ Python 2.x.xx ...
 ```
 
 ## Numbers in Python Version 2
+
 ### Floats
+
 ```bash
 >>> e = 2.718281828
 >>> type(e)
@@ -173,6 +196,7 @@ Python 2.x.xx ...
 ```
 
 ### Complex Numbers
+
 ```bash
 >>> z = 3 + 5.7j
 >>> type(z)
@@ -185,6 +209,7 @@ Python 2.x.xx ...
 ```
 
 ## Numbers in Python Version 3
+
 ```bash
 $ python3
 Python 3.x.xx ...
@@ -200,10 +225,13 @@ Python 3.x.xx ...
 496
 >>>
 ```
+
 In Python3, as large as your computer memory, you can create any integer numbers, no worry about the overflow and the underflow.
 
 ## Numbers in Python Version 3
+
 ### Floats
+
 ```bash
 >>> e = 2.718281828
 >>> type(e)
@@ -212,6 +240,7 @@ In Python3, as large as your computer memory, you can create any integer numbers
 ```
 
 ### Complex Numbers
+
 ```bash
 >>> z = 2 - 6.1j
 >>> type(z)
@@ -224,7 +253,9 @@ In Python3, as large as your computer memory, you can create any integer numbers
 ```
 
 # Arithmetic in Python
+
 ## Arithmetic in Python V2
+
 ```bash
 $ python
 Python 2.x.xx ...
@@ -243,6 +274,7 @@ Python 2.x.xx ...
 ```
 
 ## Arithmetic in Python V2
+
 ```bash
 >>> x = 28L  # long
 >>> y = 28.0  # float
@@ -259,6 +291,7 @@ Python 2.x.xx ...
 ```
 
 ## Arithmetic in Python V2
+
 ```bash
 >>> x = 1.732  # float
 >>> 1.732 + 0j
@@ -274,9 +307,11 @@ TypeError: can not convert complex to float
 ```
 
 ## Arithmetic in Python V2
+
 ![Domain of numbers](./numbers.png)
 
 ## Arithmetic Operations
+
 ```bash
 >>> a = 2  # int
 >>> b = 3L  # long
@@ -294,7 +329,9 @@ TypeError: can not convert complex to float
 ```
 
 ## Arithmetic Operations
+
 ### Integer Division
+
 ```bash
 >>> 16 / 5
 3
@@ -310,6 +347,7 @@ ZeroDivisionError: integer division or modulo by zero
 ```
 
 ## Arithmetic in Python V3
+
 ```bash
 $ python3
 Python 3.x.xx ...
@@ -325,11 +363,13 @@ Python 3.x.xx ...
 1
 >>> 16 // 5  # NOTE: double //
 3
->>> 
+>>>
 ```
 
 # Interactive Help
+
 ## dir() and help()
+
 ```bash
 >>> dir()  # short for 'directory'
 ['__builtins__', '__doc__', '__name__', '__package__']
@@ -350,6 +390,7 @@ Python 3.x.xx ...
 ```
 
 ## List of Modules
+
 ```bash
 >>> help(modules)  # results omitted
 >>> import math
@@ -365,11 +406,13 @@ NameError: name 'radians' is not defined
 NameError: name 'radians' is not defined
 >>> math.radians(180)
 3.141592653589793
->>> 
+>>>
 ```
 
 # Python Booleans
+
 ## Booleans
+
 ```bash
 >>> # Boolean values: True & False
 >>> True
@@ -385,6 +428,7 @@ NameError: name 'false' is not defined
 ```
 
 ## Booleans
+
 ```bash
 >>> # '=', '==', '!=', '>', '<'
 >>> a = 3
@@ -397,10 +441,11 @@ True
 False
 >>> a < b
 True
->>> 
+>>>
 ```
 
 ## Booleans
+
 ```bash
 >>> type(True)  # <type 'bool'> in Python 2
 <class 'bool'>
@@ -416,21 +461,24 @@ False
 ```
 
 ## Booleans
+
 ```bash
 >>> bool("Turing")
 True
 >>> bool(" ")  # NOTE the blank space in the middle
 True
 >>> bool("")  # NOTE there is no blank space in the middle
-Flase
+False
 >>> # NOTE: in python, only empty string converts to False
 ```
+
 Booleans Conversions
 
 + trivial&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->&nbsp;False
 + non-trivial&nbsp;-->&nbsp;True
 
 ## Booleans
+
 ```bash
 >>> str(True)  # NOTE the result is a string, not a boolean
 'True'
@@ -448,8 +496,11 @@ Booleans Conversions
 ```
 
 # Dates and Times
+
 ## Datetime Module
+
 ### Date
+
 ```bash
 >>> import datetime
 >>> dir(datetime)
@@ -469,7 +520,9 @@ Booleans Conversions
 ```
 
 ## Datetime Module
+
 ### Date
+
 ```bash
 >>> mill = datetime.date(2000, 1, 1)
 >>> dt = datetime.timedelta(100)
@@ -482,11 +535,13 @@ Tuesday, January 31, 1956
 >>> message = "GVR was born on {:%A, %B %d, %Y}."
 >>> print(message.format(gvr))
 GVR was born on Tuesday, January 31, 1956.
->>> 
+>>>
 ```
 
 ## Datetime Module
+
 ### time
+
 ```bash
 >>> launch_date = datetime.date(2017, 3, 30)
 >>> launch_time = datetime.time(22, 27, 0)
@@ -506,7 +561,9 @@ GVR was born on Tuesday, January 31, 1956.
 ```
 
 ## Datetime Module
+
 ### datetime
+
 ```bash
 >>> print(launch_datetime.year)
 2017
@@ -520,19 +577,18 @@ GVR was born on Tuesday, January 31, 1956.
 27
 >>> print(launch_datetime.second)
 0
->>> 
+>>>
 ```
 
 ## Datetime Module
+
 ### Access current datetime
 
-- Module:&nbsp;datetime
-- Class:&nbsp;&nbsp;&nbsp;&nbsp;datetime
-- Method:&nbsp;today()  
-  
-  
-  
+-Module:&nbsp;datetime
+-Class:&nbsp;&nbsp;&nbsp;&nbsp;datetime
+-Method:&nbsp;today()
 &nbsp;
+
 ```bash
 >>> now = datetime.datetime.today()
 >>> print(now)
@@ -543,11 +599,12 @@ GVR was born on Tuesday, January 31, 1956.
 ```
 
 ## Datetime Module
+
 ### Convert Strings to Datetimes
 
-- Module:&nbsp;datetime
-- Class:&nbsp;&nbsp;&nbsp;&nbsp;datetime
-- Method:&nbsp;strptime()
+-Module:&nbsp;datetime
+-Class:&nbsp;&nbsp;&nbsp;&nbsp;datetime
+-Method:&nbsp;strptime()
 
 ```bash
 >>> moon_landing = "7/20/1969"
@@ -557,14 +614,17 @@ GVR was born on Tuesday, January 31, 1956.
 1969-07-20 00:00:00
 >>> print(type(moon_landing_datetime))
 <class 'datetime.datetime'>
->>> 
+>>>
 ```
 
 # Control Flow in Python
+
 ## If, then, else
+
 ```bash
 $ vim if_then.py
 ```
+
 ```python
 # Collect string / test length
 
@@ -576,22 +636,25 @@ if len(input) < 6:  # Note the code block indentation
 ```
 
 ## If, then, else
+
 ```bash
-$ python if_then.py 
+$ python if_then.py
 Please enter a test string: ace
 Your string is too short.
 Please enter a string with at least 6 characters.
 
-$ python if_then.py 
+$ python if_then.py
 Please enter a test string: mission
 
-$ 
+$
 ```
 
 ## If, then, else
+
 ```bash
 $ vim if_then_2.py
 ```
+
 ```python
 # Prompt user to enter number / test if even or odd
 
@@ -605,6 +668,7 @@ else:
 ```
 
 ## If, then, else
+
 ```bash
 $ python if_then_2.py
 Please enter an integer: 17
@@ -623,9 +687,11 @@ ValueError: invalid literal for int() with base 10: 'Mercury'
 ```
 
 ## If, then, else
+
 ```bash
 $ vim if_then_3.py
 ```
+
 ```python
 # Scalene triangle: All sides have different lengths.
 # Isosceles triangle: Two sides have the same length.
@@ -644,18 +710,19 @@ else:
 ```
 
 ## If, then, else
+
 ```bash
 $ python if_then_3.py
 The length of side a = 3
 The length of side b = 4
 The length of side c = 5
 This is a scalene triangle.
-$ python if_then_3.py 
+$ python if_then_3.py
 The length of side a = 5
 The length of side b = 5
 The length of side c = 7
 This is an isosceles triangle.
-$ python if_then_3.py 
+$ python if_then_3.py
 The length of side a = 8
 The length of side b = 8
 The length of side c = 8

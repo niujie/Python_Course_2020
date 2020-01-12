@@ -1,0 +1,211 @@
+\documentclass{beamer}
+
+\usepackage{minted}
+\setminted[python]{
+    xleftmargin=10pt,linenos,
+    style=monokai,bgcolor=pythoncodebg,
+    mathescape,texcl,
+    fontsize=auto}
+
+\usetheme{CambridgeUS}
+
+% Decrease the space between the frame title and the content
+\addtobeamertemplate{frametitle}{}{\vspace{-1em}}
+
+\definecolor{pythoncodebg}{HTML}{282828}
+
+\title{Python Basics 3}
+\author{Jie Niu}
+\institute{IGWES, JNU}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\section{Logging in Python}
+
+\begin{frame}
+\begin{center}
+{\Huge Logging\par} \vspace{10pt}
+{\LARGE Hope for the best, but plan for the worst\\
+- with logging.\par} \vspace{20pt}
+\end{center}
+\begin{tabular}{ll}
+\hspace{10pt}Purpose: &Record progress and problems\dots\\
+\hspace{10pt}Levels:  &Debug, Info, Warning, Error, Critical
+\end{tabular}
+\end{frame}
+
+\begin{frame}[fragile]{Logging}
+\begin{minted}{python}
+>>> import logging
+>>>
+>>> dir(logging)
+[ ... ... ]
+\end{minted}
+The entries in all caps are constants.\\
+The capitalized items are classes.\\
+The items that start with a lower case letter are methods.
+\end{frame}
+
+\begin{frame}[fragile]{Logging}
+\begin{minted}{python}
+# Create and configure logger
+logging.basicConfig(filename = './logging.log')
+logger = logging.getLogger()
+# Test the logger
+logger.info("Our first message.")
+print(logger.level)     # 30
+\end{minted}
+\begin{columns}
+\begin{column}{.5\textwidth}
+\small
+\begin{tabular}{rr}
+    \textbf{Level} & \textbf{Numerical Value}\\
+    \hline
+    NOTESET        & 0\\
+    DEBUG          & 10\\
+    INFO           & 20\\
+    WARNING        & 30\\
+    ERROR          & 40\\
+    CRITICAL       & 50\\
+\end{tabular}
+\end{column}
+\begin{column}{0.5\textwidth}
+    basicConfig: Default log level is WARNING = 30
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Logging}
+\begin{minted}{python}
+logging.basicConfig(filename = './logging.log',
+                   level = logging.DEBUG)
+logger = logging.getLogger()
+logger.info("Our first message.")
+\end{minted}
+\small{
+Open the file '\textbf{./logging.log}' you can see:\par
+\hspace{1cm}INFO:root:Our first message.}
+\begin{minted}{python}
+LOG_FORMAT = "%(levelname)s %(asctime)s - %(message)s"
+logging.basicConfig(filename = './logging.log',
+                   level = logging.DEBUG,
+                   format = LOG_FORMAT)
+logger = logging.getLogger()
+logger.info("Our first message.")
+\end{minted}
+\small{
+Open the file '\textbf{./logging.log}' you can see:\par
+\hspace{1cm}INFO:root:Our first message.\par
+\hspace{1cm}INFO 2020-01-12 16:43:06,739 - Our first message.}
+\end{frame}
+
+\begin{frame}[fragile]{Logging}
+\begin{minted}[fontsize=\small]{python}
+LOG_FORMAT = "%(levelname)s %(asctime)s - %(message)s"
+logging.basicConfig(filename = './logging.log',
+                   level = logging.DEBUG,
+                   format = LOG_FORMAT,
+                   filemode = 'w')
+logger = logging.getLogger()
+logger.info("Our SECOND message.")
+\end{minted}
+\small{
+Open the file '\textbf{./logging.log}' you can ONLY see:\par
+\hspace{1cm}INFO 2020-01-12 16:57:26,140 - Our SECOND message.}
+\begin{minted}[fontsize=\small]{python}
+# Test messages
+logger.debug("This is a harmless debug message.")
+logger.info("Just some useful info.")
+logger.warning("I'm sorry, but I can't do that, Dave.")
+logger.error("Did you just try to divide by zero?")
+logger.critical("The entire internet is down!")
+\end{minted}
+Just check the file.
+\end{frame}
+
+\begin{frame}[fragile]{Logging - Change the logging level}
+\begin{minted}{python}
+LOG_FORMAT = "%(levelname)s %(asctime)s - %(message)s"
+logging.basicConfig(filename = './logging.log',
+                   level = logging.ERROR,
+                   format = LOG_FORMAT,
+                   filemode = 'w')
+logger = logging.getLogger()
+
+logger.debug("This is a harmless debug message.")
+logger.info("Just some useful info.")
+logger.warning("I'm sorry, but I can't do that, Dave.")
+logger.error("Did you just try to divide by zero?")
+logger.critical("The entire internet is down!")
+\end{minted}
+Open the file '\textbf{./logging.log}' you can ONLY see:\\
+ERROR 2020-01-12 17:10:39,695 - Did you just try to divide by zero?\\
+CRITICAL 2020-01-12 17:10:40,978 - The entire internet is down!
+\end{frame}
+
+\begin{frame}[fragile]{Logging}
+The solution to a "Quadratic Formula" $ax^2+bx+c=0$ are\\
+$$
+x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}
+$$
+The discriminant: $\Delta=b^2-4ac$
+\begin{minted}{python}
+import logging
+import math
+
+LOG_FORMAT = "%(levelname)s %(asctime)s - %(message)s"
+logging.basicConfig(filename = './logging.log',
+                    level = logging.DEBUG,
+                    format = LOG_FORMAT,
+                    filemode = 'w')
+logger = logging.getLogger()
+
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Logging}
+\begin{minted}[fontsize=\small]{python}
+def quadratic_formula(a, b, c):
+  """Return the solutions to the equation ax^2+bx+c=0."""
+  logger.info("quadratic_formula({0}, {1}, {2})".format(a,b,c))
+  # Compute the discriminant
+  logger.debug("# Compute the discriminant")
+  disc = b**2 - 4*a*c
+  # Compute the two roots
+  logger.debug("# Compute the two roots")
+  root1 = (-b + math.sqrt(disc)) / (2 * a)
+  root2 = (-b - math.sqrt(disc)) / (2 * a)
+  # Return the roots
+  logger.debug("# Return the roots")
+  return (root1, root2)
+
+roots = quadratic_formula(1, 0, -4)
+print(roots)    # (2.0, -2.0)
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Logging}
+Open the file '\textbf{./logging.log}' you can see:\\
+INFO 2020-01-13 01:59:56,335 - quadratic\_formula(1, 0, -4)\\
+DEBUG 2020-01-13 01:59:56,335 - \# Compute the discriminant\\
+DEBUG 2020-01-13 01:59:56,335 - \# Compute the two roots\\
+DEBUG 2020-01-13 01:59:56,335 - \# Return the roots\\
+\begin{minted}{python}
+roots = quadratic_formula(1, 0, 1)
+# \textcolor{red}{ValueError: math domain error}
+\end{minted}
+Open the file '\textbf{./logging.log}' you can ONLY see:\\
+INFO 2020-01-13 01:59:56,335 - quadratic\_formula(1, 0, -4)\\
+DEBUG 2020-01-13 01:59:56,335 - \# Compute the discriminant\\
+DEBUG 2020-01-13 01:59:56,335 - \# Compute the two roots\par
+\vspace{10pt}
+So the problem must have occurred when we tried to compute the
+roots. Can you determine the problem? 
+\end{frame}
+
+\end{document}

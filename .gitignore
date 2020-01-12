@@ -14,7 +14,9 @@
 *.gz
 *.bbl
 *.blg
+*.log
 python_basics/_minted-python_basics_2/
+python_basics/_minted-python_basics_3/
 .idea/
 out/
 .vscode/
