@@ -584,12 +584,219 @@ for walk_length in range(1, 31):
 # if you increase number\_of\_walks = 20000 you have
 # Walk size =  22 / % of no transport =  50.970000000000006
 \end{minted}
-\scriptsize{So \textit{on average} the longest random walk that ends up 4 grid 
-or fewer from the origin is \textbf{22}. \\
+\scriptsize{So \textit{on average} the longest random walk that 
+ends up 4 grid or fewer from the origin is \textbf{22}. \par
 You would observe that walks with an even number of grids leave 
 you closer to the origin than that walks one grid shorter. In 
 general, even walks are closer to origin than odd walks.}
 \end{frame}
 
+\section{List Comprehension}
+
+\begin{frame}[fragile]{List Comprehension}
+List: [ 1, 2, "a", 3.14 ] \\
+List Comprehension: \par
+\hspace{3cm}[ \textit{expr} for \textit{val} in \textit{collection} ] \par
+\hspace{3cm}[ \textit{expr} for \textit{val} in \textit{collection}
+  if <\textit{test}> ] \par
+  \hspace{3cm}[ \textit{expr} for \textit{val} in \textit{collection}
+  if <\textit{test1}> and <\textit{test2}> ] \par
+  \hspace{3cm}[ \textit{expr} for \textit{val1} in 
+  \textit{collection1} and \textit{val2} in \textit{collection2} ]
+\begin{minted}{python}
+squares = []
+for i in range(1, 101):
+  squares.append(i**2)
+
+print(squares)
+
+squares2 = [i**2 for i in range(1, 101)]
+print(squares2)
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{List Comprehension}
+\begin{minted}{python}
+remainders5 = [x**2 % 5 for x in range(1, 101)]
+print(remainders5)
+
+remainders11 = [x**2 % 11 for x in range(1, 101)]
+print(remainders11)
+\end{minted}
+\begin{center}
+\large{Quadratic Reciprocity}
+\end{center}
+p\_remainders = [ $x^2\ \%\ p$ for x in range(0, \textit{p}) ]
+\par \vspace{1em}
+len(p\_remainders) = $\frac{p+1}{2}$
+\end{frame}
+
+\begin{frame}[fragile]{List Comprehension}
+\begin{minted}[fontsize=\small]{python}
+movies = ["Star Wars", "Gandhi", "Casablanca", 
+"Shawshank Redemption", "Toy Story", "Gone with the Wind", 
+"Citizen Kane", "It's a Wonderful Life", "The Wizard of Oz", 
+"Gattaca", "Rear Window", "Ghostbusters", 
+"To Kill A Mockingbird", "Good Will Hunting", 
+"2001: A Space Odyssey", "Raiders of the Lost Ark", 
+"Groundhog Day", "Close Encounters of the Third Kind"]
+gmovies = []
+for title in movies:
+  if title.startswith("G"):
+    gmovies.append(title)
+
+print(gmovies)
+
+gmovies = [title for title in movies if title.startswith("G")]
+print(gmovies)
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{List Comprehension}
+\begin{minted}[fontsize=\footnotesize]{python}
+movies = [("Citizen Kane", 1941), ("Spirited Away", 2001), 
+("It's a Wonderful Life", 1946), ("Groundhog Day", 1993), 
+("No Country for Old Men", 2007), ("Rear Window", 1954), 
+("The Lord of the Rings: The Fellowship of the Ring", 2001), 
+("Gattaca", 1997), ("Close Encounters of the Third Kind", 1977), 
+("The Royal Tenenbaums", 2001), ("The Aviator", 2004), 
+("Raiders of the Lost Ark", 1981)]
+
+pre2k = [title for (title, year) in movies if year < 2000]
+print(pre2k)
+\end{minted}
+\vspace{-2.5em}
+\begin{minted}{python}
+v = [2, -3, 1]
+4 * v
+# [2, -3, 1, 2, -3, 1, 2, -3, 1, 2, -3, 1]
+# 4 * v = v + v + v + v
+# In Python, Adding Lists = Concatenation
+[2, 4, 6] + [1, 3]
+# [2, 4, 6, 1, 3]
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{List Comprehension}
+\begin{minted}{python}
+w = [4*x for x in v]
+print(w)
+
+# Cartesian Product
+A = [1, 3, 5, 7]
+B = [2, 4, 6, 8]
+cartesian_product = [(a, b) for a in A for b in B]
+print(cartesian_product)
+len(cartesian_product)
+\end{minted}
+\end{frame}
+
+\section{Python Class and Object}
+
+\begin{frame}[fragile]{Class and Object}
+\begin{minted}{python}
+# Suggest using capitalized word for class name
+class User:
+  pass
+# an "instance" of User
+user1 = User()  # user1 is an "object"
+user1.first_name = "Dave"
+user1.last_name = "Bowman"
+# These are Fields: Data attached to an object
+print(user1.first_name)
+print(user1.last_name)
+# Style Guid for Python (PEP 8)
+# "...lowercase with words separated by underscores as
+# necessary to improve readability"
+first_name = "Arthur"
+last_name = "Clarke"
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Class and Object}
+\begin{minted}{python}
+print(first_name, last_name)
+# Arthur Clarke
+print(user1.first_name, user1.last_name)
+# Dave Bowman
+
+user2 = User()
+user2.first_name = "Frank"
+user2.last_name = "Poole"
+print(first_name, last_name)
+print(user1.first_name, user1.last_name)
+print(user2.first_name, user2.last_name)
+
+user1.age = 37
+user2.favorite_book = "2001: A Space Odyssey"
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Class and Object}
+\begin{minted}{python}
+print(user1.age)
+# 37
+print(user2.age)
+# \textcolor{red}{AttributeError: 'User' object has no attribute 'age'}
+\end{minted}
+So why using Class? Class Features: * Methods * Initialization 
+* Help text
+\begin{minted}{python}
+class User:
+  def __init__(self, full_name, birthday):
+    self.name = full_name
+    self.birthday = birthday
+    # Extract first and last names
+    name_pieces = full_name.split(" ")
+    self.first_name = name_pieces[0]
+    last_name = name_pieces[-1] # NOTE missing 'self' here
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Class and Object}
+\begin{minted}[fontsize=\small]{python}
+user = User("Dave Bowman", "19710315")
+print(user.name)
+print(user.birthday)
+print(user.first_name)
+print(user.last_name)
+# \textcolor{red}{AttributeError: 'User' object has no attribute 'last\_name'}
+
+class User():
+  """A member of FriendFace.  For now we are 
+     only staring their name and birthday.
+     But soon we will store an uncomfortable 
+     amount of user information."""
+  
+  def __init__(self, full_name, birthday):
+    pass
+
+help(User)
+\end{minted}
+\end{frame}
+\begin{frame}[fragile]{Class and Object}
+\begin{minted}[fontsize=\scriptsize]{python}
+import datetime
+class User:
+  def __init__(self, full_name, birthday):
+    self.name = full_name
+    self.birthday = birthday  # yyyymmdd
+  
+  def age(self):
+    """Return the age of the user in years."""
+    today = datetime.date(2001, 5, 12)
+    yyyy = int(self.birthday[0:4])
+    mm = int(self.birthday[4:6])
+    dd = int(self.birthday[6:8])
+    dob = datetime.date(yyyy, mm, dd)  # Date of birth
+    age_in_days = (today - dob).days
+    age_in_years = age_in_days / 365
+    return int(age_in_years)
+
+user = User("Dave Bowman", "19710315")
+print(user.age())  # 30
+help(User)  # NOTE the 'age' method appears
+\end{minted}
+\end{frame}
 
 \end{document}
