@@ -15,6 +15,7 @@
 *.bbl
 *.blg
 *.log
+*.csv
 python_basics/_minted-python_basics_2/
 python_basics/_minted-python_basics_3/
 .idea/

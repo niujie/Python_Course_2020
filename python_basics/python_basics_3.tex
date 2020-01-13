@@ -1,5 +1,7 @@
 \documentclass{beamer}
 
+\usepackage[T1]{fontenc}  % for correctly display > <
+\usepackage{hyperref}
 \usepackage{minted}
 \setminted[python]{
     xleftmargin=10pt,linenos,
@@ -189,23 +191,405 @@ print(roots)    # (2.0, -2.0)
 \end{minted}
 \end{frame}
 
-\begin{frame}[fragile]{Logging}
+\begin{frame}[fragile]{Logging} \vspace{1em}
+\small{
 Open the file '\textbf{./logging.log}' you can see:\\
 INFO 2020-01-13 01:59:56,335 - quadratic\_formula(1, 0, -4)\\
 DEBUG 2020-01-13 01:59:56,335 - \# Compute the discriminant\\
 DEBUG 2020-01-13 01:59:56,335 - \# Compute the two roots\\
-DEBUG 2020-01-13 01:59:56,335 - \# Return the roots\\
+DEBUG 2020-01-13 01:59:56,335 - \# Return the roots\par}
 \begin{minted}{python}
 roots = quadratic_formula(1, 0, 1)
 # \textcolor{red}{ValueError: math domain error}
 \end{minted}
+\small{
 Open the file '\textbf{./logging.log}' you can ONLY see:\\
 INFO 2020-01-13 01:59:56,335 - quadratic\_formula(1, 0, -4)\\
 DEBUG 2020-01-13 01:59:56,335 - \# Compute the discriminant\\
-DEBUG 2020-01-13 01:59:56,335 - \# Compute the two roots\par
+DEBUG 2020-01-13 01:59:56,335 - \# Compute the two roots\par}
 \vspace{10pt}
+\large{
 So the problem must have occurred when we tried to compute the
-roots. Can you determine the problem? 
+roots. Can you determine the problem?}
 \end{frame}
+
+\section{Practice}
+\subsection{Fibonacci Sequence}
+
+\begin{frame}[fragile]{Practice}
+\begin{center}
+{\LARGE Fibonacci Sequence\par} \vspace{1em}
+Goal: Write function to return $n^{th}$ term of Fibonacci Sequence.
+\begin{itemize}
+\item Fast
+\item Clearly written
+\item Rock solid
+\end{itemize}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Fibonacci Sequence}
+\begin{minted}[fontsize=\small]{python}
+# Recursive function
+# recommend using lower case for functions
+def fibonacci(n):
+  if n == 1:
+    return 1
+  elif n == 2:
+    return 1
+  elif n > 2:  # function that calls it self is called
+               # \textbf{RECURSIVE} function
+    return fibonacci(n-1) + fibonacci(n-2)
+
+for n in range(1, 11):
+  print(n, ":", fibonacci(n))
+
+# Then, try the following:
+for n in range(1, 101):
+  print(n, ":", fibonacci(n))  # slow? disappointing?
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Fibonacci Sequence}
+fibonacci(5) = fibonacci(4) + fibonacci(3) \\
+\ = fibonacci(3) + fibonacci(2) + fibonacci(2) + fibonacci(1) \\
+{\small 
+\ = fibonacci(2) + fibonacci(1) + fibonacci(2) + fibonacci(2) + fibonacci(1)} \\
+\ = 1 + 1 + 1 + 1 + 1 \\
+\ = 5 \par \vspace{1em}
+One simple cure to this is \textbf{Memorization}. \par
+Idea: Cache values. If we have cached the value, then return it. \\
+1: Implement explicitly \\
+2: Use builtin Python tool
+\end{frame}
+
+\begin{frame}[fragile]{Fibonacci Sequence - Cache}
+\begin{minted}[fontsize=\footnotesize]{python}
+fibonacci_cache = {}
+def fibonacci(n):
+  if n in fibonacci_cache:
+    return fibonacci_cache[n]
+  
+  # Compute the Nth term
+  if n == 1:
+    value = 1
+  elif n == 2:
+    value = 1
+  elif n > 2:
+    value = fibonacci(n-1) + fibonacci(n-2)
+  
+  # Cache the value and return it
+  fibonacci_cache[n] = value
+  return value
+
+for n in range(1, 1001):
+  print(n, ":", fibonacci(n))  # fast enough
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Fibonacci Cache - Cache} \vspace{1em}
+But note our first version of the Fibonacci function is appealing.
+It is clean and simple.
+\begin{minted}[fontsize=\small]{python}
+from functools import lru_cache
+# LRU Cache = Least Recently Used Cache
+@lru_cache(maxsize = 1000)
+# default maxsize = 128
+def fibonacci(n):
+  if n == 1:
+    return 1
+  elif n == 2:
+    return 1
+  elif n > 2:
+    return fibonacci(n-1) + fibonacci(n-2)
+
+for n in range(1, 501):
+  print(n, ":", fibonacci(n))
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Fibonacci Sequence - Handeling Argument} \vspace{1em}
+But we are not done yet. What if we call the following? \vspace{-.5em}
+\begin{minted}{python}
+fibonacci(2.1)
+fibonacci(-1)
+fibonacci("one")
+# fix the problems like above
+def fibonacci(n):
+  # Check that the input is a positive integer
+  if type(n) != int:
+    raise TypeError("n must be a positive int")
+  if n < 1:
+    raise ValueError("n must be a positive int")
+  ... ...
+# what do you expect for the following ratio?
+for n in range(1, 51):
+  print(n, ":", fibonacci(n+1) / fibonacci(n))
+\end{minted}
+\end{frame}
+
+\section{Random Number}
+
+\begin{frame}[fragile]{Python Random Number Generator} \vspace{1em}
+The world is a chaotic place from Heisenberg's uncertainty principle
+to the butterfly effect. Our lives are fraught with randomness.\\
+For uncertainty analysis like Monte Carlo simulation, this is
+critical.
+\begin{minted}{python}
+import random
+print(dir(random))
+help(random.random)
+# random() -> x in the interval [0, 1).
+# NOTE the returned value includes 0 but excludes 1.
+# Display 10 random numbers from interval [0, 1)
+# Every time when you execute the following code,
+# different random numbers should be generated.
+for i in range(10):
+  print(random.random())
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Python Random Number Generator}
+\begin{minted}[fontsize=\small]{python}
+# Generate random numbers from interval [3, 7)
+# Call random():                 # in [0, 1)
+# Scale number (multiply by 4):  # in [0, 4)
+# Shift number (add 3):          # in [3, 7)
+def my_random():
+  # random, scale, shift, return ...
+  return 4 * random.random() + 3
+
+for i in range(10):
+  print(my_random())
+
+# Simpler way
+help(random.uniform)  # Get a random number in the range 
+                # [a, b) or [a, b] depending on rounding.
+\end{minted}
+The \textbf{random()} function can be used to build customized 
+random number generators.
+\end{frame}
+
+\begin{frame}[fragile]{Random Number Distributions}
+\begin{minted}{python}
+for i in range(10):
+  print(random.uniform(3, 7))
+
+# random() and uniform() are both uniform distributions.
+# We can use the normalvariate() function for normal distribution.
+for i in range(20):
+  print(random.normalvariate(0, 1))  # 0 for the mean, $\mu$
+                      # 1 for the standard deviation, $\sigma$
+for i in range(20):
+  print(random.normalvariate(0, 9))
+for i in range(20):
+  print(random.normalvariate(0, 0.2))
+for i in range(20):
+  print(random.normalvariate(5, 0.2))
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Discrete Probability Distributions}
+\begin{minted}{python}
+# roll a dice
+for i in range(20):
+  print(random.randint(1, 6))
+
+outcomes = ['rock', 'paper', 'scissors']
+for i in range(20):
+  print(random.choice(outcomes))
+
+# Or you can do it explicitly
+for i in range(20):
+  ind = random.randint(0, 2)
+  print(outcomes[ind])
+\end{minted}
+\end{frame}
+
+\section{CSV Files}
+\subsection{Read CSV File}
+
+\begin{frame}[fragile]{CSV File in Python} \vspace{1em}
+\small{
+CSV = Comma Separated Values \par
+Here is the \href{https://goo.gl/3zaUlD}{\underline{\textcolor
+{blue}{link}}} to the example data we will use.} \vspace{-.5em}
+\begin{minted}[fontsize=\footnotesize]{python}
+path = "./google_stock_data.csv"
+file = open(path)
+for line in file:
+  print(line)
+lines = [line for line in open(path)]
+lines[0]  # note the '$\backslash$n' at the end
+lines[1]
+# remove any leading or trailing whitespace
+lines[0].strip()
+# split the string into smaller pieces
+lines[0].strip().split(',')
+# Then we can create the dataset
+dataset = [line.strip().split(',') for line in open(path)]
+dataset[0]
+dataset[1]
+file.close()  # remember to close the file
+\end{minted}
+\end{frame}
+
+\subsection{Python CSV Module}
+
+\begin{frame}[fragile]{Python CSV Module} \vspace{1em}
+\small{
+The elements in dataset are all strings till now. \\
+If the data itself in CSV file contained comma like the titles 
+of books or movies, splitting by comma causes problem. \\
+Thus we need to use CSV module in Python.} \vspace{-.5em}
+\begin{minted}[fontsize=\small]{python}
+import csv
+print(dir(csv))
+file = open(path, newline='')  # The empty string passed
+# to 'newline' will make sure that different line breaker
+# would be treated correctly across all platforms.
+reader = csv.reader(file)
+header = next(reader) # The first line is the header
+data = [row for row in reader]  # Read the remaining data
+print(header)
+print(data[0])
+file.close()
+\end{minted}
+The Python CSV module is more robust and simple to read. But 
+the data elements are still strings.
+\end{frame}
+
+\begin{frame}[fragile]{Convert Data Types}
+\begin{minted}[fontsize=\scriptsize]{python}
+# We have to convert the data to the appropriate types.
+from datetime import datetime
+file = open(path, newline='')
+reader = csv.reader(file)
+header = next(reader)
+data = []
+for row in reader:
+  # row = [Date, Open, High, Low, CLose, Volume, Adj. Close]
+  date = datetime.strptime(row[0], '%m/%d/%Y')
+  open_price = float(row[1])  # don't use 'open' since it is
+                             # a builtin function in Python
+  high = float(row[2])
+  low = float(row[3])
+  close = float(row[4])
+  volume = int(row[5])
+  adj_close = float(row[6])
+  data.append([date, open_price, high, low, close, volume, adj_close])
+
+print(data[0])
+file.close()
+\end{minted}
+\end{frame}
+
+\subsection{Write CSV File}
+
+\begin{frame}[fragile]{Write CSV File} \vspace{1em}
+\footnotesize{
+Stock Return = \% change in price \par
+Common time frames: \par
+\quad >> Daily \quad >> Weekly \quad >> Monthly 
+\quad >> Quarterly \quad >> Annual}
+\vspace{-.5em}
+\begin{minted}[fontsize=\scriptsize]{python}
+# Compute and store daily stock returns
+returns_path = "./google_returns.csv"
+file = open(returns_path, 'w')
+writer = csv.writer(file)
+writer.writerow(["Date", "Return"])
+
+for i in range(len(data) - 1):
+  todays_row = data[i]
+  todays_date = todays_row[0]
+  todays_price = todays_row[-1]
+  yesterdays_row = data[i+1]
+  yesterdays_price = yesterdays_row[-1]
+
+  daily_return = (todays_price - yesterdays_price) / yesterdays_price
+  formatted_date = todays_date.strftime('%m/%d/%Y')
+  writer.writerow([formatted_date, daily_return])
+# file must be closed
+file.close()  # otherwise the data may not be correctly written in
+\end{minted}
+\end{frame}
+
+\section{Monte Carlo Simulation}
+
+\begin{frame}[fragile]{Random Walk \& Monte Carlo Simulation} \vspace{1em}
+If you can only move 1 step at four direction each step: 
+north, south, east, and west, what is the longest random walk 
+you can take so that \textit{on average} you will end up 4 
+grid or fewer from the origin. \vspace{-.5em}
+\begin{minted}[fontsize=\scriptsize]{python}
+import random
+
+def random_walk(n):
+  """Return coordinates after 'n' block random walk."""
+  x = 0
+  y = 0
+  for i in range(n):
+    step = random.choice(['N', 'S', 'E', 'W'])
+    if step == 'N':
+      y = y + 1
+    elif step == 'S':
+      y = y - 1
+    elif step == 'E':
+      x = x + 1
+    else:
+      x = x - 1
+  return (x, y)
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Random Walk \& Monte Carlo Simulation}
+\begin{minted}[fontsize=\footnotesize]{python}
+for i in range(25):
+  walk = random_walk(10)
+  print(walk, "Distance from home = ",
+        abs(walk[0]) + abs(walk[1]))
+
+def random_walk_2(n):
+  """Return coordinates after 'n' block random walk."""
+  x, y = 0, 0
+  for i in range(n):
+    (dx, dy) = random.choice([(0, 1), (0, -1), 
+                              (1, 0), (-1, 0)])
+    x += dx   # x = x + dx
+    y += dy   # y = y + dy
+  return (x, y)
+
+for i in range(25):
+  walk = random_walk_2(10)
+  print(walk, "Distance from home = ",
+        abs(walk[0]) + abs(walk[1]))
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Random Walk \& Monte Carlo Simulation}
+\begin{minted}[fontsize=\footnotesize]{python}
+number_of_walks = 10000
+for walk_length in range(1, 31):
+  no_transport = 0  # Number of walks 4 or fewer grid from origin
+  for i in range(number_of_walks):
+    (x, y) = random_walk_2(walk_length)
+    distance = abs(x) + abs(y)
+    if distance <= 4:
+      no_transport += 1
+  no_transport_percentage = float(no_transport) / number_of_walks
+  print("Walk size = ", walk_length,
+        "/ % of no transport = ", 100 * no_transport_percentage)
+# Walk size =  22 / % of no transport =  51.38
+# if you increase number\_of\_walks = 20000 you have
+# Walk size =  22 / % of no transport =  50.970000000000006
+\end{minted}
+\scriptsize{So \textit{on average} the longest random walk that ends up 4 grid 
+or fewer from the origin is \textbf{22}. \\
+You would observe that walks with an even number of grids leave 
+you closer to the origin than that walks one grid shorter. In 
+general, even walks are closer to origin than odd walks.}
+\end{frame}
+
 
 \end{document}
