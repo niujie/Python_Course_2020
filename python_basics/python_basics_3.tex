@@ -799,4 +799,132 @@ help(User)  # NOTE the 'age' method appears
 \end{minted}
 \end{frame}
 
+\section{Practice}
+\subsection{Prime Numbers}
+
+\begin{frame}[fragile]{Prime Numbers}
+Prime Number: Only divisible by itself and 1\par
+\hspace{2.5cm}(2, 3, 5, 7, 11, 13, 17, 19, \dots)\\
+Composite Number: can be factored into smaller integers\par
+\hspace{3cm}($4=2\times2,6=2\times3,8=2\times2\times2,9=3\times3$, \dots)\\
+Unit: 1\\
+\# V1) Test all divisors from 2 through n-1 (skip 1 and n) \vspace{-.5em}
+\begin{minted}{python}
+def is_prime_v1(n):
+  """Return 'True' if 'n' is a prime number.
+     False otherwise"""
+  if n == 1:
+    return False  # 1 is not prime
+  for d in range(2, n):
+    if n % d == 0:
+      return False
+  return True
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Prime Numbers}
+\begin{minted}[fontsize=\small]{python}
+# ===== Test Function =====
+for n in range(1, 21):
+  print(n, is_prime_v1(n))
+
+import time
+
+# ===== Time Function =====
+# Do not run in interpreter, writing the code in .py
+# file, and run it in terminal instead.
+# Otherwise the printing of True's and False's
+# will cost most of the time.
+t0 = time.time()
+for n in range(1, 100000):
+  is_prime_v1(n)
+
+t1 = time.time()
+print("Time required: ", t1 - t0)  # slow, more than 1 min.
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Prime Numbers} \vspace{.5em}
+Next step: Reduce number of divisors we check
+\begin{align*}
+36&=1\times36=2\times18=3\times12=4\times9\\
+  &=6\times6\\
+  &=9\times4=12\times3=18\times2=36\times1\\
+18&=1\times18=2\times9=3\times6\\
+  &=\sqrt{18}\times\sqrt{18}\\
+  &=6\times3=9\times2=18\times1\\
+n &=1\times n=a\times b=\dots\\
+  &=\sqrt{n}\times\sqrt{n}\\
+  &=\dots=b\times a=n\times1
+\end{align*}
+\end{frame}
+
+\begin{frame}[fragile]{Prime Numbers} \vspace{1em}
+\# V2) TEst all divisors from 2 through $\sqrt{N}$
+\begin{minted}{python}
+import math
+def is_prime_v2(n):
+  """Return 'True' if 'n' is a prime number.
+     False otherwise."""
+  if n == 1:
+    return False
+
+  max_divisor = int(math.floor(math.sqrt(n)))
+  for d in range(2, 1 + max_divisor):
+    if n % d == 0:
+      return False
+
+  return True
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Prime Numbers}
+\begin{minted}{python}
+# ===== Test Function =====
+for n in range(1, 21):
+  print(n, is_prime_v2(n))
+
+# ===== Time Function =====
+# Write a script file and run in terminal
+t0 = time.time()
+for n in range(1, 100000):
+  is_prime_v2(n)
+
+t1 = time.time()
+print("Time required: ", t1 - t0)  # much better
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Prime Numbers - Cont. Improve the Efficiency}
+\vspace{1em}
+Step 1) Test if n is even\\
+Step 2) TEst only odd divisors \vspace{-.5em}
+\begin{minted}[fontsize=\small]{python}
+def is_prime_v3(n):
+  """Return 'True' if 'n' is a prime number.
+     False otherwise."""
+  if n == 1:
+    return False
+  # if it's even and not 2, then it's not prime
+  if n == 2:
+    return True
+  if n > 2 and n % 2 == 0:
+    return False
+  max_divisor = int(math.floor(math.sqrt(n)))
+  for d in range(3, 1 + max_divisor, 2):
+    if n % d == 0:
+      return False
+  return True
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Prime Numbers - Cont. Improve the Efficiency}
+V1: 70.03 sec\\
+V2: 0.301 sec\\
+V3: 0.145 sec\\
+\begin{minted}{python}
+
+\end{minted}
+\end{frame}
+
 \end{document}
