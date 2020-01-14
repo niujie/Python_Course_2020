@@ -16,6 +16,7 @@
 *.blg
 *.log
 *.csv
+*.pyc
 python_basics/_minted-python_basics_2/
 python_basics/_minted-python_basics_3/
 python_basics/_minted-python_basics_4/
