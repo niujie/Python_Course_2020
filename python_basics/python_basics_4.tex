@@ -1,0 +1,300 @@
+\documentclass{beamer}
+
+\usepackage[T1]{fontenc}  % for correctly display > <
+\usepackage{hyperref}
+\usepackage{minted}
+\setminted[python]{
+    xleftmargin=10pt,linenos,
+    style=monokai,bgcolor=pythoncodebg,
+    mathescape,texcl,
+    fontsize=auto}
+\setminted[shell]{
+    xleftmargin=10pt,linenos,
+    style=rainbow_dash,
+    mathescape,texcl,
+    fontsize=auto}
+
+\usetheme{CambridgeUS}
+
+% Decrease the space between the frame title and the content
+\addtobeamertemplate{frametitle}{}{\vspace{-1em}}
+
+\definecolor{pythoncodebg}{HTML}{282828}
+
+\title{Python Basics 4}
+\author{Jie Niu}
+\institute{IGWES, JNU}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\section{PyDoc}
+\subsection{Python Documentation Module - PyDoc}
+
+\begin{frame}[fragile]
+\begin{columns}
+\begin{column}{.5\textwidth}
+\begin{minted}{shell}
+$ python -m pydoc
+$ python -m pydoc math
+$ python -m pydoc tuple
+$ python -m pydoc pow
+# Same as
+$ python
+>>> help(pow)
+>>> quit()
+\end{minted}
+\end{column}
+\begin{column}{.5\textwidth}
+\begin{minted}{shell}
+$ python -m pydoc -k ftp
+$ python -m pydoc ftplib
+$ python -m pydoc -k sql
+$ sudo python -m pydoc -p 314
+$ sudo pydoc3 -b
+$ mkdir pydoc_demo
+$ cd pydoc_demo
+$ python -m pydoc -w json
+\end{minted}
+\end{column}
+\end{columns}
+\end{frame}
+
+\section{JSON}
+\subsection{json.load}
+
+\begin{frame}[fragile]{JSON - Java Script Object Notation}
+\begin{minted}{python}
+$ cat movie_1.txt
+
+import json
+dir(json)
+# json.load(f):    Load JSON data from file
+#                  (or file-like object)
+# json.loads(s):   Load JSON data from a string
+# json.dump(j, f): Write JSON object to file
+#                  (or file-like object)
+# json.dumps(j):   Output JSON object as string
+json_file = open("./movie_1.txt", "r", encoding="utf-8")
+movie = json.load(json_file)
+json_file.close()
+movie
+type(movie)  # <class 'dict'>
+\end{minted}
+\end{frame}
+
+\subsection{json.loads}
+
+\begin{frame}[fragile]
+\begin{minted}{python}
+movie["title"]  # 'Gottaca'
+movie["actor"]
+# ['Ethan Hawke', 'Uma Thurman', 'Alan Arkin', 'Loren Dean']
+movie["release_year"]  # 1997
+value = """
+    {"title": "Tron: Legacy",
+     "composer": "Daft Punk",
+     "release_year": 2010,
+     "budget": 170000000,
+     "actors": null,
+     "won_oscar": false
+    }"""
+tron = json.loads(value)
+tron
+\end{minted}
+\end{frame}
+
+\subsection{json.dumps}
+
+\begin{frame}[fragile]
+\begin{minted}{python}
+json.dumps(movie)  # output a string
+# NOTE 'None' <-> 'null', 'True' <-> 'true'
+#      'False' <-> 'false', 'ł' <-> '$\backslash\backslash$u0142'
+
+json.dumps(movie, ensure_ascii=False)
+# 'ł' is now preserved
+\end{minted}
+\end{frame}
+
+\subsection{json.dump}
+
+\begin{frame}[fragile]
+\begin{minted}{python}
+movie2 = {}
+movie2["title"] = "Minority Report"
+movie2["director"] = "Steven Spielberg"
+movie2["composer"] = "John Williams"
+movie2["actors"] = ["Tom Cruise", "Colin Farrell", 
+    "Samantha Morton", "Max von Sydow"]
+movie2["is_awesome"] = True
+movie2["budget"] = 102000000
+movie2["cinematographer"] = "Janusz Kami\u0144ski"
+
+file2 = open('./movie_2.txt', 'w', encoding='utf-8')
+json.dump(movie2, file2, ensure_ascii=False)
+file2.close()
+\end{minted}
+\end{frame}
+
+\section{Lambda Expression \& Anonymous Function}
+
+\begin{frame}[fragile]{Lambda Expression = Anonymous Function}
+\begin{minted}{python}
+# Write function to compute 3x+1
+def f(x):
+    return 3*x + 1
+
+f(2)  # 7
+lambda x: 3*x + 1
+# <function <lambda> at 0x102cb71e0>
+g = lambda x: 3*x+1
+g(2)    # 7
+
+# Combine first and last names into a single "Full Name"
+full_name = lambda fn, ln: fn.strip().title() + " " + \
+                ln.strip().title()
+full_name("    leonhard", "EULER")
+# 'Leonhard Euler'
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{minted}[fontsize=\footnotesize]{python}
+# Sort the authors by last names
+scifi_authors = ["Isaac Asimov", "Ray Bradbury", 
+    "Robert Heinlein", "Arthus C. Clarke", "H. G. Wells", 
+    "Orson Scott Card", "Douglas Adams", "Frank Herbert",
+    "Leigh Brackett"]
+help(scifi_authors.sort)
+scifi_authors.sort(key=lambda name:name.split(" ")[-1].lower())
+scifi_authors
+
+def build_quadratic_function(a, b, c):
+    """Returns the function f(x) = ax^2 + bx + c"""
+    return lambda x: a*x**2 + b*x + c
+
+f = build_quadratic_function(2, 3, -5)
+f(0)  # -5
+f(1)  # 0
+f(2)  # 9
+
+build_quadratic_function(3, 0, 1)(2)  # $3x^2+1$ evaluated for x=2, 13
+\end{minted}
+\end{frame}
+
+\section{Map, Filter, and Reduce Functions}
+\subsection{Map}
+
+\begin{frame}[fragile]
+\begin{minted}{python}
+import math
+
+def area(r):
+    """Area of a circle with radius 'r'."""
+    return math.pi * (r**2)
+
+radii = [2, 5, 7.1, 0.3, 10]
+
+# Method 1: Direct method
+areas = []
+for r in radii:
+    a = area(r)
+    areas.append(a)
+
+print(areas)
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{minted}{python}
+# Method 2: Use 'map' function
+map(area, radii)
+# <map object at 0x102f3add8>
+list(map(area, radii))
+\end{minted}
+'map' function\\
+Data: $a_1, a_2, \dots, a_n$\\
+Function: $f$\\
+map(f, data): Returns iterator over $f(a_1), f(a_2),...,f(a_n)$
+\begin{minted}[fontsize=\small]{python}
+temps = [("Berlin", 29), ("Cairo", 36), ("Buenos Aires", 19),
+    ("Los Angeles", 26), ("Tokyo", 27), ("New York", 28), 
+    ("London", 22), ("Beijing", 32)]
+\end{minted}
+Convert temperature from Celsius to Fahrenheit $F=\frac{9}{5}\cdot{C}+32$
+\begin{minted}{python}
+c_to_f = lambda data: (data[0], (9/5)*data[1] + 32)
+list(map(c_to_f, temps))
+\end{minted}
+\end{frame}
+
+\subsection{Filter}
+
+\begin{frame}[fragile]{}
+\begin{minted}{python}
+import statistics
+
+data = [1.3, 2.7, 0.8, 4.1, 4.3, -0.1]
+avg = statistics.mean(data)
+avg  # 2.183333333333333
+
+filter(lambda x: x > avg, data)
+list(filter(lambda x: x > avg, data))  # [2.7, 4.1, 4.3]
+list(filter(lambda x: x < avg, data))  # [1.3, 0.8, -0.1]
+
+# Remove missing data
+countries = ["", "Argentina", "", "Brazil", "Chile", "",
+    "Colombia", "", "Ecuador", "", "", "Venezuela"]
+list(filter(None, countries))  # ['Argentina', 'Brazil', 
+        # 'Chile', 'Colombia', 'Ecuador', 'Venezuela']
+\end{minted}
+\small{False values in Python:
+"", 0, 0.0, 0j, [], (), {}, False, None, instances which signal
+they are empty}
+\end{frame}
+
+\subsection{Reduce}
+
+\begin{frame}[fragile]{}
+In Python 3+, \textbf{reduce} is not a builtin function, but has been
+moved to the '\textbf{functools}' module.\par \vspace{5pt}
+\textit{"Use functools.reduce() if you really need it; however, 99\% of the 
+time an explicit for loop is more readable." -- Guido van Rossum}\par \vspace{10pt}
+Data: $[a_1, a_2, a_3, \dots, a_n]$\\
+Function: $f(x, y)$\\
+reduce(f, data):
+\begin{align*}
+Step\ 1:\quad   &val_1=f(a_1, a_2)\\
+Step\ 2:\quad   &val_2=f(val_1, a_3)\\
+\vdots\\
+Step\ n-1:\quad &val_{n-1}=f(val_{n-2}, a_n)
+\end{align*}
+Alternatively:
+\ \ Returns $f(f(f(a_1, a_2), a_3),\dots,a_n)$
+\end{frame}
+
+\begin{frame}[fragile]{}
+\begin{minted}{python}
+from functools import reduce
+
+# Multiply all numbers in a list
+data = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+multiplier = lambda x, y: x*y
+reduce(multiplier, data)
+# 6469693230
+
+product = 1
+for x in data:
+    product *= x
+
+product
+# 6469693230
+\end{minted}
+\end{frame}
+
+\end{document}
