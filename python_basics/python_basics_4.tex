@@ -770,10 +770,124 @@ finally:
 Objective:\\
 - Write function that reads binary file and returns data\\
 - Measure time required
-\begin{minted}{python}
+\begin{minted}[fontsize=\tiny]{python}
+import logging
+import time
 
+# Create logger
+logging.basicConfig(filename = "./problems.log",
+                    level = logging.DEBUG)
+logger = logging.getLogger()
+
+def read_file_timed(path):
+    """Return the contents of the file at 'path' and measure time required."""
+    start_time = time.time()
+    try:
+        f = open(path, mode="rb")
+        data = f.read()
+        return data
+    except FileNotFoundError as err:
+        logger.error(err)
+        raise
+    else:
+        f.close()
+    finally:
+        stop_time = time.time()
+        dt = stop_time - start_time
+        logger.info("Time required for {file} = {time}".format(file=path,
+                                                              time=dt))
 \end{minted}
 \end{frame}
 
+\begin{frame}[fragile]{}
+\begin{minted}[fontsize=\small]{python}
+data = read_file_timed("/Users/niujie/Documents/paws_example"
+                    +"/amazonTRMM_correct_LON.mat")
+\end{minted}
+\begin{minted}[fontsize=\tiny]{shell}
+$ cat problems.log
+INFO:root:Time required for /Users/niujie/Documents/paws_example/amazonTRMM_correct_LON.mat = 0.10913896560668945
+\end{minted}
+\begin{minted}[fontsize=\small]{python}
+data = read_file_timed("file_not_exist")
+# \scriptsize{\textcolor{red}{FileNotFoundError: [Errno 2] No such file or directory: 'file\_not\_exist'}}
+\end{minted}
+\begin{minted}[fontsize=\tiny]{shell}
+$ cat problems.log
+INFO:root:Time required for /Users/niujie/Documents/paws_example/amazonTRMM_correct_LON.mat = 0.10913896560668945
+ERROR:root:[Errno 2] No such file or directory: 'file_not_exist'
+INFO:root:Time required for file_not_exist = 0.000324249267578125
+\end{minted}
+\end{frame}
+
+\section{URLlib}
+
+\begin{frame}[fragile]{}
+There are more pages on the internet than people on Earth.\par
+\vspace{10pt}
+URL = Uniform Resource Locator, e.g.,\par \vspace{5pt}
+\underline{\textcolor{blue}{https://www.google.com}}\par \vspace{5pt}
+\textbf{Protocol}: http, https, ftp, \dots\\
+\textbf{Host}: www.google.com, \dots\\
+\textbf{Port}: http=80, https=443\\
+\textbf{Path}: string after the Host\\
+\textbf{Querystring}: key=value\&xyz\\
+\textbf{Fragment}: used to jump to a section in the webpage \par \vspace{10pt}
+\hspace{1cm}\textbf{urllib}\\
+request: open URLs\\
+\textcolor{gray}{response: (used internally)}\\
+error: request exceptions\\
+parse: useful URL functions\\
+robotparser: robots.txt files
+\end{frame}
+
+\subsection{request: open URLs}
+
+\begin{frame}[fragile]{}
+\begin{minted}[fontsize=\footnotesize]{python}
+import urllib
+dir(urllib)
+
+from urllib import request
+dir(request)
+
+# Files: open(\textit{file})
+# URLs:  urlopen(\textit{url})
+resp = request.urlopen("https://www.jnu.edu.cn")
+type(resp)
+# <class 'http.client.HTTPResponse'>
+dir(resp)
+resp.code # 200
+
+# HTTP Status Codes
+# 200: OK
+# 400: Bad Request
+# 403: Forbidden
+# 404: Not Found
+# \vdots
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\begin{minted}[fontsize=\small]{python}
+resp.length  # xxx (in bytes)
+resp.peek()  # look at a small part of the response
+"""b'<!DOCTYPE html>\r\n<html lang="zh-CN">\r\n  <head>
+\r\n    <meta name="force-rendering" content="webkit">\r\n
+<meta charset="utf-8">\r\n    
+<meta http-equiv="X-UA-Compatible" content="IE=edge">\r\n"""
+# 'b' at beginning means it's a "bytes object"
+data = resp.read()
+type(data)
+# <class 'bytes'>
+len(data) # 169229
+html = data.decode("UTF-8")
+type(html)  # <class 'str'>
+html  # display the entire webpage in human readable format
+resp.read()
+# b''
+resp = request.urlopen("https://www.baidu.com/search?q=ok")
+\end{minted}
+\end{frame}
 
 \end{document}
