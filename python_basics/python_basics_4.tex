@@ -297,4 +297,483 @@ product
 \end{minted}
 \end{frame}
 
+\section{Sorting}
+
+\begin{frame}[fragile]{}
+\begin{minted}{python}
+# Alkaline earth metals
+earth_metals = ["Beryllium", "Magnesium", "Calcium",
+    "Strontium", "Barium", "Radium"]
+earth_metals.sort()
+earth_metals  # sorted in alphabetically ascending order
+
+earth_metals.sort(reverse=True)
+earth_metals  # sorted in alphabetically descending order
+
+# save data in tuple instead
+earth_metals = ("Beryllium", "Magnesium", "Calcium",
+    "Strontium", "Barium", "Radium")
+earth_metals.sort()
+# \textcolor{red}{AttributeError: 'tuple' object has no attribute 'sort'}
+
+help(list.sort)
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\small{reverse = False   ==> Sort in ascending order\\
+reverse = True\ \ ==> Sort in \textit{descending} order\par
+\vspace{5pt}
+"in-place" algorithm: \par
+\hspace{3cm}Does not create a 2nd data structure\par
+\hspace{3cm}Modifies input/existing structure}
+\begin{minted}[fontsize=\small]{python}
+# format := (name, radius, density, distance from Sun)
+# Radius:  Radius at equator in kilometers
+# Density: Average density in g / $cm^3$
+# Distance from Sun: Avg. distance to Sun in AUs
+planets = [
+    ("Mercury", 2440, 5.43, 0.395),
+    ("Venus", 6052, 5.24, 0.723),
+    ("Earth", 6378, 5.52, 1.000),
+    ("Mars", 3396, 3.93, 1.530),
+    ("Jupiter", 71492, 1.33, 5.210),
+    ("Saturn", 60268, 0.69, 9.551),
+    ("Uranus", 25559, 1.27, 19.213),
+    ("Neptune", 24764, 1.64, 30.070)
+    ]
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\begin{minted}[fontsize=\footnotesize]{python}
+size = lambda planet: planet[1]
+planets.sort(key=size, reverse=True)
+planets
+
+density = lambda planet: planet[2]
+planets.sort(key = density)
+planets
+\end{minted}
+\small{list.sort() changes the list\\
+Q: Can you create a sorted copy?\\
+Q: How do you sort a tuple?\\
+A: Use sorted()}
+\begin{minted}[fontsize=\footnotesize]{python}
+help(sorted)
+sorted_earth_metals = sorted(earth_metals)
+earth_metals  # tuple
+sorted_earth_metals  # list, not a tuple
+
+sorted("Alphabetical")
+# ['A', 'a', 'a', 'b', 'c', 'e', 'h', 'i', 'l', 'l', 'p', 't']
+\end{minted}
+\end{frame}
+
+\section{Text Files}
+\subsection{Read Files}
+
+\begin{frame}[fragile]{}
+\begin{columns}[t]
+\hspace{2cm}
+\begin{column}{.3\textwidth}
+\textbf{\LARGE{Text Files}}\par \vspace{5pt}
+>> Plain Text\\
+>> XML\\
+>> JSON\\
+>> Source Code\\
+\vdots
+\end{column}
+\begin{column}{.5\textwidth}
+\textbf{\LARGE{Binary Files}}\par \vspace{5pt}
+>> Compiled code\\
+>> App data\\
+>> Media files\\
+\ \ $\sim$ images\\
+\ \ $\sim$ audio\\
+\ \ $\sim$ video\\
+\vdots
+\end{column}
+\end{columns}
+\begin{minted}{python}
+help(open)
+
+f = open("./text_files/guido_bio.txt")
+text = f.read()
+f.close()
+
+print(text)
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\begin{minted}{python}
+# More safe way. Don't need to close the file explicitly
+with open("./text_files/guido_bio.txt") as fobj:
+    bio = fobj.read()
+
+print(bio)
+
+with open("some_file_not_exist.txt") as f:
+    text = f.read()
+# \small{\textcolor{red}{FileNotFoundError: [Errno 2] No such file or directory:}}
+
+try:
+    with open("some_file_not_exist.txt") as f:
+        text = f.read()
+except FileNotFoundError:
+    text = None
+
+print(text)  # None
+\end{minted}
+\end{frame}
+
+\subsection{Write Files}
+
+\begin{frame}[fragile]{}
+\begin{minted}{python}
+oceans = ["Pacific", "Atlantic", "Indian", 
+    "Southern", "Arctic"]
+with open("./text_files/oceans.txt", 'w') as f:
+    # default mode is 'r'
+    for ocean in oceans:
+        f.write(ocean)
+
+$ cat oceans.txt
+# PacificAtlanticIndianSouthernArctic
+
+with open("./text_files/oceans.txt", 'w') as f:
+    for ocean in oceans:
+        f.write(ocean)
+        f.write("\n")
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\begin{minted}{python}
+with open("./text_files/oceans.txt", 'w') as f:
+    for ocean in oceans:
+        print(ocean, file=f)
+
+with open("./text_files/oceans.txt", 'a') as f:
+    # append to the file
+    print(23*"=", file=f)
+    print("These are the 5 oceans.", file=f)
+
+\end{minted}
+\end{frame}
+
+\section{Unit Test}
+
+\begin{frame}[fragile]{}
+\textit{"Trust but verify \dots" -- Shakespeare} \par
+\hspace{3cm}with unit testing.
+\begin{minted}{python}
+# ===== 04\_circles.py =====
+from math import pi
+
+def circle_area(r):
+    return pi*(r**2)
+
+# Test function
+radii = [2, 0, -3, 2 + 5j, True, "radius"]
+message = "Area of circles with r = {radius} is {area}."
+
+for r in radii:
+    A = circle_area(r)
+    print(message.format(radius=r, area=A))
+
+# ==========================
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\small{\$ python 04\_circles.py} \par \vspace{-.5em}
+\begin{minted}[fontsize=\scriptsize]{python}
+Area of circles with r = 2 is 12.566370614359172.
+Area of circles with r = 0 is 0.0.
+Area of circles with r = -3 is 28.274333882308138.
+Area of circles with r = (2+5j) is (-65.97344572538566+62.83185307179586j).
+Area of circles with r = True is 3.141592653589793.
+Traceback (most recent call last):
+  File "04_circles.py", line 11, in <module>
+    A = circle_area(r)
+  File "04_circles.py", line 4, in circle_area
+    return pi*(r**2)
+TypeError: unsupported operand type(s) for ** or pow(): 'str' and 'int'
+\end{minted}
+\centerline{\small{\textbf{Unit Tests}}}
+\begin{columns}[t]
+\hspace{2cm}
+\begin{column}{.3\textwidth}
+\footnotesize{Naming Convention \#1} \par \vspace{5pt}
+\footnotesize{
+/circles.py\\
+/ellipses.py\\
+/hyperbolas.py\\
+/polygons.py\\
+\textcolor{orange}{
+/test\_circles.py\\
+/test\_ellipses.py\\
+/test\_hyperbolas.py\\
+/test\_polygons.py\\}
+}
+\end{column}
+\begin{column}{.5\textwidth}
+\footnotesize{Naming Convention \#2} \par \vspace{5pt}
+\footnotesize{
+/circles.py\\
+\textcolor{orange}{/circles\_test.py}\\
+/ellipses.py\\
+\textcolor{orange}{/ellipses\_test.py}\\
+/hyperbolas.py\\
+\textcolor{orange}{/hyperbolas\_test.py}\\
+/polygons.py\\
+\textcolor{orange}{/polygons\_test.py}
+}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\begin{minted}[fontsize=\footnotesize]{python}
+# ====== ./unit\_test/circles.py ======
+from math import pi
+
+def circle_area(r):
+    return pi*(r**2)
+# ====================================
+
+# ====== ./unit\_test/test\_circles.py ======
+import unittest
+from circles import circle_area
+from math import pi
+
+class TestCircleArea(unittest.TestCase):
+    def test_area(self):
+        # Test areas when radius >= 0
+        self.assertAlmostEqual(circle_area(1), pi)
+        self.assertAlmostEqual(circle_area(0), 0)
+        self.assertAlmostEqual(circle_area(2.1), pi * 2.1**2)
+
+# =========================================
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\begin{minted}{shell}
+$ python -m unittest test_circles 
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+
+$ python -m unittest 
+
+----------------------------------------------------------------------
+Ran 1 tests in 0.000s
+
+OK
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\begin{minted}[fontsize=\small]{python}
+# ====== ./unit\_test/test\_circles.py ======
+import unittest
+from circles import circle_area
+from math import pi
+
+class TestCircleArea(unittest.TestCase):
+    def test_area(self):
+        # Test areas when radius >= 0
+        self.assertAlmostEqual(circle_area(1), pi)
+        self.assertAlmostEqual(circle_area(0), 0)
+        self.assertAlmostEqual(circle_area(2.1), pi * 2.1**2)
+    
+    def test_values(self):
+        # Make sure value errors are raised when necessary
+        self.assertRaises(ValueError, circle_area, -2)
+
+# =========================================
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\begin{minted}{shell}
+$ python -m unittest test_circles   
+.F
+======================================================================
+FAIL: test_values (test_circles.TestCircleArea)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "test_circles.py", line 14, in test_values
+    self.assertRaises(ValueError, circle_area, -2)
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+FAILED (failures=1)
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\begin{minted}{python}
+# ====== ./unit\_test/circles.py ======
+from math import pi
+
+def circle_area(r):
+    if r < 0:
+        raise ValueError("The radius cannot be negative.")
+    return pi*(r**2)
+# ====================================
+\end{minted}
+\begin{minted}{shell}
+$ python -m unittest test_circles
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+OK
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\begin{minted}[fontsize=\scriptsize]{python}
+import unittest
+help(unittest)
+
+# ====== ./unit\_test/test\_circles.py ======
+import unittest
+from circles import circle_area
+from math import pi
+
+class TestCircleArea(unittest.TestCase):
+    def test_area(self):
+        # Test areas when radius >= 0
+        self.assertAlmostEqual(circle_area(1), pi)
+        self.assertAlmostEqual(circle_area(0), 0)
+        self.assertAlmostEqual(circle_area(2.1), pi * 2.1**2)
+    def test_values(self):
+        # Make sure value errors are raised when necessary
+        self.assertRaises(ValueError, circle_area, -2)
+    def test_types(self):
+        # Make sure type errors are raised when necessary
+        self.assertRaises(TypeError, circle_area, 3+5j)
+        self.assertRaises(TypeError, circle_area, True)
+        self.assertRaises(TypeError, circle_area, "radius")
+# =========================================
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\begin{minted}{shell}
+$ python -m unittest test_circles   
+.F.
+======================================================================
+FAIL: test_types (test_circles.TestCircleArea)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "test_circles.py", line 19, in test_types
+    self.assertRaises(TypeError, circle_area, True)
+AssertionError: TypeError not raised
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.000s
+
+FAILED (failures=1)
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\begin{minted}[fontsize=\scriptsize]{python}
+# ====== ./unit\_test/circles.py ======
+from math import pi
+
+def circle_area(r):
+    if type(r) not in [int, float]:
+        raise TypeError("The radius must be a non-negative real number.")
+
+    if r < 0:
+        raise ValueError("The radius cannot be negative.")
+    return pi*(r**2)
+# ====================================
+\end{minted}
+\begin{minted}{shell}
+$ python -m unittest test_circles   
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.000s
+
+OK
+\end{minted}
+\end{frame}
+
+\section{Exception}
+
+\begin{frame}[fragile]{}
+\textit{"If you fail to plan,\\
+you are planning to fail." - Benjamin Franklin} \par \vspace{10pt}
+Exception Object: \par
+\hspace{1em}- Description\par
+\hspace{1em}- Traceback
+\begin{minted}{python}
+# ==== 04\_exceptions\_tutorial.py ====
+for i in range(5)
+    print("Hello, world")
+\end{minted}
+\begin{minted}{shell}
+$ python 04_exceptions_tutorial.py
+File "04_exceptions_tutorial.py", line 1
+    for i in range(5)
+                    ^
+SyntaxError: invalid syntax
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\begin{minted}[fontsize=\scriptsize]{python}
+1/0
+# \textcolor{red}{ZeroDivisionError: division by zero}
+with open("file_not_exist.txt") as xf:
+    the_truth = xf.read()
+# \textcolor{red}{FileNotFoundError: [Errno 2] No such file or directory: 'file\_not\_exist.txt'}
+1 + 2 + "three"
+# \textcolor{red}{TypeError: unsupported operand type(s) for +: 'int' and 'str'}
+import math
+print(math.sqrt(-1))
+# \textcolor{red}{ValueError: math domain error}
+# For complex numbers, use 'cmath' module
+\end{minted}
+\scriptsize{Exception Clauses}
+\begin{minted}[fontsize=\scriptsize]{shell}
+try:
+  # Runs first
+  < code >
+except:
+  # Runs if exception occurs in try block
+  < code >
+else:
+  # Executes if try block *succeeds*
+  < code >
+finally:
+  # This code *always* executes
+  < code >
+\end{minted}
+\end{frame}
+
+\subsection{Exception Clauses}
+
+\begin{frame}[fragile]{}
+Objective:\\
+- Write function that reads binary file and returns data\\
+- Measure time required
+\begin{minted}{python}
+
+\end{minted}
+\end{frame}
+
+
 \end{document}
