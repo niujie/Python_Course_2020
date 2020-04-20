@@ -23,4 +23,4 @@ def p(k, lambda_):
         return p(k - 1, lambda_) * lambda_ / k
 
 
-print(S(155))
+print(S(100))
