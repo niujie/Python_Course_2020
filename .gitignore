@@ -1,6 +1,5 @@
 
 *.pdf
-*.png
 *.aux
 *.fls
 *.listing
@@ -23,9 +22,11 @@ python_basics/_minted-python_basics_3/
 python_basics/_minted-python_basics_4/
 .idea/
 out/
+videos/
+Tex/
 .vscode/
+.venv/
 .ipynb_checkpoints
-images/
 /students_homework/
 /students_homework/
 /Advection-Diffusion-Equation/figs/
